@@ -1,0 +1,365 @@
+/* ═══════════════════════════════════════
+   NAV  –  data-theme drives all colors
+   themes: default | on-dark | scrolled | menu-open
+═══════════════════════════════════════ */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* smooth everything */
+  transition:
+    background 0.4s ease,
+    padding 0.3s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* ─── scrolled: solid cream pill ─── */
+.nav[data-theme="scrolled"] {
+  background: rgba(245, 240, 220, 0.97);
+  backdrop-filter: blur(14px);
+  padding: 16px 60px;
+  border-bottom: 1px solid rgba(232, 62, 11, 0.1);
+  box-shadow: 0 2px 20px rgba(26, 18, 9, 0.06);
+}
+
+/* ─── menu-open: transparent (panel slides in from side) ─── */
+.nav[data-theme="menu-open"] {
+  background: transparent;
+  border-bottom: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+/* ═══════════════════════════════════════
+   LOGO
+═══════════════════════════════════════ */
+.logo {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-decoration: none;
+  position: relative;
+  z-index: 201;
+  transition: color 0.3s;
+
+  /* default: orange on cream pages */
+  color: var(--orange);
+}
+.logo span {
+  font-style: italic;
+}
+
+/* on dark hero → cream logo */
+.nav[data-theme="on-dark"] .logo,
+.nav[data-theme="menu-open"] .logo {
+  color: var(--cream);
+}
+
+/* scrolled → always orange */
+.nav[data-theme="scrolled"] .logo {
+  color: var(--orange);
+}
+
+/* ═══════════════════════════════════════
+   DESKTOP LINKS
+═══════════════════════════════════════ */
+.links {
+  display: flex;
+  gap: 44px;
+  list-style: none;
+  align-items: center;
+}
+
+.link {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s;
+  color: var(--dark); /* default: dark on cream page */
+}
+
+/* underline */
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+.link:hover::after,
+.active::after {
+  width: 100%;
+}
+
+/* on dark hero → cream links */
+.nav[data-theme="on-dark"] .link {
+  color: rgba(245, 240, 220, 0.9);
+}
+
+/* scrolled → always dark */
+.nav[data-theme="scrolled"] .link {
+  color: var(--dark);
+}
+
+/* ─── Connect CTA button ─── */
+.ctaBtn {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 2px;
+  border: 1.5px solid transparent;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+
+  /* default */
+  background: var(--orange);
+  color: var(--cream) !important;
+}
+.ctaBtn:hover {
+  background: var(--dark);
+}
+
+/* on dark hero → ghost/outline style so it doesn't clash */
+.nav[data-theme="on-dark"] .ctaBtn {
+  background: transparent;
+  border-color: rgba(245, 240, 220, 0.5);
+  color: var(--cream) !important;
+}
+.nav[data-theme="on-dark"] .ctaBtn:hover {
+  background: var(--cream);
+  color: var(--orange) !important;
+  border-color: var(--cream);
+}
+
+/* scrolled → solid orange */
+.nav[data-theme="scrolled"] .ctaBtn {
+  background: var(--orange);
+  color: var(--cream) !important;
+  border-color: transparent;
+}
+.nav[data-theme="scrolled"] .ctaBtn:hover {
+  background: var(--dark);
+}
+
+/* ═══════════════════════════════════════
+   HAMBURGER
+═══════════════════════════════════════ */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: none;
+  padding: 6px;
+  position: relative;
+  z-index: 201;
+  width: 36px;
+  height: 36px;
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s ease,
+    background 0.3s;
+  transform-origin: center;
+
+  /* default: dark bars */
+  background: var(--dark);
+}
+
+/* on dark hero / menu open → cream bars */
+.nav[data-theme="on-dark"] .hamburger span,
+.nav[data-theme="menu-open"] .hamburger span {
+  background: var(--cream);
+}
+
+/* scrolled → dark bars */
+.nav[data-theme="scrolled"] .hamburger span {
+  background: var(--dark);
+}
+
+/* X animation */
+.isOpen span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.isOpen span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.isOpen span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ═══════════════════════════════════════
+   MOBILE OVERLAY
+═══════════════════════════════════════ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  pointer-events: none;
+  visibility: hidden;
+}
+.overlayOpen {
+  pointer-events: all;
+  visibility: visible;
+}
+
+/* dim backdrop */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 18, 9, 0.5);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.overlayOpen .backdrop {
+  opacity: 1;
+}
+
+/* slide-in panel */
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(420px, 100vw);
+  height: 100%;
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 120px 52px 52px;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.overlayOpen .panel {
+  transform: translateX(0);
+}
+
+/* ── Panel links ── */
+.panelLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.panelLink {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(32px, 7vw, 48px);
+  font-weight: 700;
+  color: rgba(245, 240, 220, 0.28);
+  text-decoration: none;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(245, 240, 220, 0.06);
+  opacity: 0;
+  transform: translateX(18px);
+  transition:
+    color 0.3s,
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+.overlayOpen .panelLink {
+  opacity: 1;
+  transform: translateX(0);
+}
+.panelLink:hover,
+.panelLinkActive {
+  color: var(--cream) !important;
+}
+
+.panelNum {
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--orange);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.panelCta {
+  display: inline-block;
+  margin-top: 36px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-decoration: none;
+  border: 1.5px solid var(--orange);
+  padding: 13px 30px;
+  border-radius: 2px;
+  align-self: flex-start;
+  opacity: 0;
+  transform: translateX(18px);
+  transition:
+    background 0.3s,
+    color 0.3s,
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+.overlayOpen .panelCta {
+  opacity: 1;
+  transform: translateX(0);
+}
+.panelCta:hover {
+  background: var(--orange);
+  color: var(--cream);
+}
+
+/* ── Panel footer ── */
+.panelFooter {
+  border-top: 1px solid rgba(245, 240, 220, 0.07);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.panelFooter span {
+  font-size: 12px;
+  color: rgba(245, 240, 220, 0.25);
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav,
+  .nav[data-theme="scrolled"] {
+    padding: 18px 24px;
+  }
+  .links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}

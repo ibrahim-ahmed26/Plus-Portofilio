@@ -1,0 +1,170 @@
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.5s ease 0.3s;
+}
+
+.exit {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* ── Rings in background ── */
+.rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 62, 11, 0.12);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spinRing 20s linear infinite;
+}
+.ring1 {
+  width: 220px;
+  height: 220px;
+}
+.ring2 {
+  width: 380px;
+  height: 380px;
+  animation-direction: reverse;
+  animation-duration: 30s;
+}
+.ring3 {
+  width: 540px;
+  height: 540px;
+  animation-duration: 45s;
+}
+.ring4 {
+  width: 700px;
+  height: 700px;
+  animation-direction: reverse;
+  animation-duration: 60s;
+}
+
+@keyframes spinRing {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ── Word wrapper ── */
+.wordWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.word {
+  display: flex;
+  gap: 4px;
+}
+
+/* ── Each letter ── */
+.letter {
+  position: relative;
+  display: inline-block;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(72px, 18vw, 160px);
+  font-weight: 900;
+  letter-spacing: -4px;
+  line-height: 1;
+  /* reserve space */
+  width: 1ch;
+  text-align: center;
+}
+
+/* outline layer — always shown */
+.letterOutline {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(245, 240, 220, 0.18);
+  position: absolute;
+  inset: 0;
+  text-align: center;
+}
+
+/* fill layer — clips up from bottom */
+.letterFill {
+  display: block;
+  color: var(--orange);
+  position: absolute;
+  inset: 0;
+  text-align: center;
+
+  /* clip from bottom to top */
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* when filled — reveal the color */
+.letterFilled .letterFill {
+  clip-path: inset(0% 0 0 0);
+}
+
+/* also brighten the outline when filled */
+.letterFilled .letterOutline {
+  -webkit-text-stroke-color: rgba(245, 240, 220, 0);
+  transition: -webkit-text-stroke-color 0.3s;
+}
+
+/* ── Tagline ── */
+.tagline {
+  font-size: 13px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: rgba(245, 240, 220, 0.3);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.6s ease 0.2s,
+    transform 0.6s ease 0.2s;
+}
+.taglineVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Progress bar ── */
+.progressWrap {
+  position: absolute;
+  bottom: 48px;
+  left: 60px;
+  right: 60px;
+  height: 1px;
+  background: rgba(245, 240, 220, 0.08);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--orange);
+  transition: width 0.26s ease;
+}
+
+@media (max-width: 600px) {
+  .progressWrap {
+    left: 24px;
+    right: 24px;
+    bottom: 36px;
+  }
+}

@@ -1,0 +1,239 @@
+.hero {
+  background: var(--orange);
+  padding: 140px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(245, 240, 220, 0.5);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(56px, 8vw, 110px);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 0.95;
+}
+.title em {
+  font-style: italic;
+}
+
+/* MAIN */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0;
+  min-height: 80vh;
+}
+
+/* INFO */
+.info {
+  padding: 80px 60px;
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.infoIntro {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(245, 240, 220, 0.55);
+}
+
+.infoItems {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.infoIcon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.infoItem div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.infoItem strong {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 500;
+}
+
+.infoItem span {
+  font-size: 14px;
+  color: rgba(245, 240, 220, 0.7);
+}
+
+.socials {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.socialItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid rgba(245, 240, 220, 0.07);
+  border-radius: 2px;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+.socialItem:hover {
+  border-color: rgba(232, 62, 11, 0.4);
+  background: rgba(232, 62, 11, 0.06);
+}
+
+.socialLabel {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.socialHandle {
+  font-size: 13px;
+  color: rgba(245, 240, 220, 0.6);
+}
+
+/* FORM */
+.form {
+  padding: 80px 60px;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(26, 18, 9, 0.45);
+}
+
+.input,
+.select,
+.textarea {
+  background: rgba(26, 18, 9, 0.04);
+  border: 1px solid rgba(26, 18, 9, 0.1);
+  border-radius: 2px;
+  padding: 14px 18px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  color: var(--dark);
+  outline: none;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+  width: 100%;
+  appearance: none;
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(26, 18, 9, 0.25);
+}
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--orange);
+  background: rgba(232, 62, 11, 0.04);
+}
+
+.select {
+  cursor: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E83E0B' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 44px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.submit {
+  align-self: flex-start;
+  background: var(--orange);
+  color: var(--cream);
+  border: none;
+  padding: 16px 36px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 2px;
+  cursor: none;
+  transition: all 0.3s;
+}
+.submit:hover:not(:disabled) {
+  background: var(--dark);
+}
+.submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.submit[data-status="success"] {
+  background: #1a5c1a;
+}
+
+.errorMsg {
+  font-size: 13px;
+  color: #c0392b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero {
+    padding: 100px 24px 60px;
+  }
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .info,
+  .form {
+    padding: 60px 24px;
+  }
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .socials {
+    grid-template-columns: 1fr;
+  }
+}

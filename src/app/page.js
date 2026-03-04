@@ -1,65 +1,114 @@
-import Image from "next/image";
+import Link from "next/link";
+import Marquee from "../app/components/Marquee";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      {/* ── HERO ── */}
+      <section className={styles.hero}>
+        {/* blobs */}
+        <div className={styles.blob1} />
+        <div className={styles.blob2} />
+
+        {/* rings */}
+        <div className={styles.rings} aria-hidden="true">
+          <div className="ring" />
+          <div className="ring" />
+          <div className="ring" />
+          <div className="ring" />
+          <div className="ring" />
+        </div>
+
+        <p className={styles.eyebrow}>
+          Full-Service Digital Agency · Cairo, Egypt
+        </p>
+
+        <h1 className={styles.title}>
+          We Make
+          <em>Brands</em>
+          Unforgettable.
+        </h1>
+
+        <div className={styles.bottom}>
+          <p className={styles.desc}>
+            A creative partner for huge commercial brands in the Egyptian &amp;
+            Middle East market — where creativity meets reality.
           </p>
+          <Link href="/services" className={styles.btn}>
+            Explore Work <span className={styles.arrow}>→</span>
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className={styles.scrollHint} aria-hidden="true">
+          Scroll
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ── MARQUEE ── */}
+      <Marquee />
+
+      {/* ── QUICK INTRO ── */}
+      <section className={styles.intro}>
+        <div className={styles.introGrid}>
+          <div>
+            <p className="section-label">Who We Are</p>
+            <h2 className={styles.introHeading}>
+              Creativity meets <em>Reality</em>
+            </h2>
+            <p className={styles.introText}>
+              Plus is a full-service digital agency and creative partner for
+              major commercial brands in Egypt. We deliver integrated digital
+              marketing for companies of all sizes.
+            </p>
+            <Link href="/about" className={styles.outlineBtn}>
+              Learn More →
+            </Link>
+          </div>
+
+          <div className={styles.statGrid}>
+            {[
+              { num: "10+", label: "Years Experience" },
+              { num: "50+", label: "Brands Served" },
+              { num: "100+", label: "Campaigns" },
+              { num: "4", label: "Countries" },
+            ].map((s) => (
+              <div key={s.label} className={styles.stat}>
+                <span className={styles.statNum}>{s.num}</span>
+                <span className={styles.statLabel}>{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CLIENTS STRIP ── */}
+      <section className={styles.clients}>
+        <p
+          className="section-label"
+          style={{ justifyContent: "center", marginBottom: "48px" }}
+        >
+          Brands We&apos;ve Worked With
+        </p>
+        <div className={styles.clientsGrid}>
+          {[
+            "Pepsi",
+            "Mountain Dew",
+            "Gatorade",
+            "Cheetos",
+            "Persil",
+            "Aquafina",
+            "Orange",
+            "Danone HiPRO",
+          ].map((name) => (
+            <div key={name} className={styles.clientCell}>
+              <span className={styles.clientName}>{name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+    </>
   );
 }

@@ -1,0 +1,182 @@
+.hero {
+  min-height: 50vh;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 120px 60px 80px;
+  border-bottom: 1px solid rgba(26, 18, 9, 0.08);
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(64px, 9vw, 120px);
+  font-weight: 900;
+  color: var(--dark);
+  line-height: 0.9;
+}
+.title em {
+  color: var(--orange);
+  font-style: italic;
+}
+
+/* PROJECTS */
+.projectsSection {
+  padding: 80px 60px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg, var(--dark));
+  border-radius: 4px;
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+.card:hover {
+  transform: scale(0.98);
+}
+.card.wide {
+  grid-column: span 2;
+  aspect-ratio: 16/7;
+}
+
+.cardBg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardBgText {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(40px, 5vw, 80px);
+  font-weight: 900;
+  color: rgba(245, 240, 220, 0.07);
+  text-align: center;
+  letter-spacing: -2px;
+}
+
+.cardInner {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+  display: flex;
+  align-items: flex-end;
+  padding: 32px;
+  z-index: 1;
+}
+
+.cardContent {
+}
+
+.cardCategory {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(245, 240, 220, 0.55);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cardTitle {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.cardClient {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* CLIENTS */
+.clients {
+  padding: 80px 60px 120px;
+}
+
+.clientsHeading {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 900;
+  margin-bottom: 48px;
+  line-height: 1;
+}
+.clientsHeading em {
+  color: var(--orange);
+  font-style: italic;
+}
+
+.clientsGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  background: rgba(26, 18, 9, 0.07);
+}
+
+.clientCell {
+  background: var(--cream);
+  padding: 36px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  cursor: default;
+}
+.clientCell:hover {
+  background: var(--orange);
+}
+
+.clientName {
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark);
+  text-align: center;
+  transition: color 0.3s;
+}
+.clientCell:hover .clientName {
+  color: var(--cream);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 100px 24px 60px;
+  }
+  .projectsSection,
+  .clients {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .card.wide {
+    grid-column: span 1;
+    aspect-ratio: 4/3;
+  }
+  .clientsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
