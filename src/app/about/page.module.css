@@ -195,7 +195,6 @@
   color: rgba(245, 240, 220, 0.6);
 }
 
-/* RESPONSIVE */
 @media (max-width: 900px) {
   .hero {
     padding: 0 24px 60px;
@@ -212,6 +211,9 @@
   }
   .valuesGrid {
     grid-template-columns: 1fr;
+  }
+  .valueCard {
+    padding: 32px 24px;
   }
   .stats {
     grid-template-columns: 1fr 1fr;
