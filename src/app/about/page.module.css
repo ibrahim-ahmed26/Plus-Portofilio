@@ -118,16 +118,13 @@
   gap: 2px;
   background: rgba(26, 18, 9, 0.08);
 }
-@media (maxwidth: 767px) {
-  .valuesGrid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
+
 .valueCard {
   background: var(--cream);
   padding: 48px 36px;
   transition: background 0.4s;
   cursor: default;
+  overflow: hidden;
 }
 .valueCard:hover {
   background: var(--dark);
@@ -195,31 +192,76 @@
   color: rgba(245, 240, 220, 0.6);
 }
 
+/* RESPONSIVE — TABLET (max 900px) */
 @media (max-width: 900px) {
   .hero {
     padding: 0 24px 60px;
   }
+
   .story,
   .vision,
   .values {
     padding-left: 24px;
     padding-right: 24px;
   }
+
   .storyGrid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
   .valuesGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
+
   .valueCard {
-    padding: 32px 24px;
+    padding: 36px 28px;
   }
+
   .stats {
     grid-template-columns: 1fr 1fr;
   }
+
   .statItem {
     border-right: none;
     border-bottom: 1px solid rgba(245, 240, 220, 0.15);
+  }
+}
+
+/* RESPONSIVE — MOBILE (max 480px) */
+@media (max-width: 480px) {
+  .hero {
+    padding: 0 20px 48px;
+  }
+
+  .story,
+  .vision,
+  .values {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .valueCard {
+    padding: 32px 24px;
+  }
+
+  .valuesHeading {
+    margin-bottom: 40px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .statItem {
+    padding: 40px 24px;
+  }
+
+  .statNum {
+    font-size: 40px;
   }
 }
