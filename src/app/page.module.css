@@ -64,6 +64,11 @@
   z-index: 1;
   animation: fadeUp 0.8s ease 0.4s both;
 }
+@media (max-width: 768px) {
+  .title {
+    font-size: clamp(40px, 9vw, 70px);
+  }
+}
 .title em {
   font-style: italic;
   display: block;

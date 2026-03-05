@@ -118,7 +118,11 @@
   gap: 2px;
   background: rgba(26, 18, 9, 0.08);
 }
-
+@media (maxwidth: 767px) {
+  .valuesGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 .valueCard {
   background: var(--cream);
   padding: 48px 36px;
@@ -207,7 +211,7 @@
     gap: 40px;
   }
   .valuesGrid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
   .stats {
     grid-template-columns: 1fr 1fr;

@@ -5,13 +5,9 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <>
-      {/* ── HERO ── */}
       <section className={styles.hero}>
-        {/* blobs */}
         <div className={styles.blob1} />
         <div className={styles.blob2} />
-
-        {/* rings */}
         <div className={styles.rings} aria-hidden="true">
           <div className="ring" />
           <div className="ring" />
@@ -44,11 +40,7 @@ export default function Home() {
           Scroll
         </div>
       </section>
-
-      {/* ── MARQUEE ── */}
       <Marquee />
-
-      {/* ── QUICK INTRO ── */}
       <section className={styles.intro}>
         <div className={styles.introGrid}>
           <div>
@@ -107,8 +99,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* ── CTA ── */}
     </>
   );
 }

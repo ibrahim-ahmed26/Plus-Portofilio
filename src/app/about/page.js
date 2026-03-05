@@ -82,7 +82,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* VALUES */}
       <section className={styles.values}>
         <p className="section-label">What We Stand For</p>
         <h2 className={styles.valuesHeading}>
@@ -98,8 +97,6 @@ export default function About() {
           ))}
         </div>
       </section>
-
-      {/* STATS */}
       <section className={styles.stats}>
         {[
           { num: "10+", label: "Years in the market" },
