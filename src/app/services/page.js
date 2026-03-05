@@ -1,60 +1,19 @@
+import { db } from "../lib/firebase";
 import styles from "./page.module.css";
+import { collection, getDocs } from "firebase/firestore";
 
 export const metadata = {
   title: "Services | Plus Creative Studio",
 };
 
-// TODO: replace with Firestore fetch
-// e.g. const services = await getDocs(collection(db, 'services'))
-const services = [
-  {
-    num: "01",
-    icon: "✦",
-    name: "Design & Branding",
-    desc: "Visual identity systems, logo design, brand guidelines, and packaging that make your brand instantly recognizable and emotionally resonant.",
-    tags: ["Logo Design", "Brand Identity", "Packaging", "Guidelines"],
-  },
-  {
-    num: "02",
-    icon: "◈",
-    name: "Digital Marketing",
-    desc: "Targeted campaigns, media buying, and performance marketing that deliver measurable results across all digital channels.",
-    tags: ["Media Buying", "Performance", "Analytics", "Targeting"],
-  },
-  {
-    num: "03",
-    icon: "◉",
-    name: "Social Media",
-    desc: "Strategic content creation, community management, and influencer campaigns that grow your presence and drive genuine engagement.",
-    tags: ["Content Creation", "Community", "Influencers", "Strategy"],
-  },
-  {
-    num: "04",
-    icon: "▲",
-    name: "Event Management",
-    desc: "Full event planning, social event coverage, and outdoor activations that create unforgettable brand experiences.",
-    tags: ["Planning", "Coverage", "OutDoor", "Activation"],
-  },
-  {
-    num: "05",
-    icon: "◇",
-    name: "Media Production",
-    desc: "Video production, photography, and creative content that tells your brand story with stunning visual impact.",
-    tags: ["Video", "Photography", "Motion", "Content"],
-  },
-  {
-    num: "06",
-    icon: "⬡",
-    name: "UI & UX Design",
-    desc: "User-centered interface design and digital experience strategy that converts visitors into loyal customers.",
-    tags: ["UI Design", "UX Research", "Prototyping", "Web"],
-  },
-];
-
-export default function Services() {
+export default async function Services() {
+  const snapshot = await getDocs(collection(db, "services"));
+  const services = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
   return (
     <>
-      {/* PAGE HERO */}
       <section className={styles.hero}>
         <div className={styles.heroRings} aria-hidden="true">
           <div className="ring" />
@@ -71,7 +30,6 @@ export default function Services() {
         </p>
       </section>
 
-      {/* SERVICES GRID */}
       <section className={styles.grid}>
         {services.map((s, i) => (
           <article key={s.num} className={styles.card}>
@@ -93,7 +51,6 @@ export default function Services() {
         ))}
       </section>
 
-      {/* PROCESS */}
       <section className={styles.process}>
         <p className="section-label">How We Work</p>
         <h2 className={styles.processHeading}>

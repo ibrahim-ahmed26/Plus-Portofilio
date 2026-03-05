@@ -24,7 +24,6 @@ body {
   cursor: none;
 }
 
-/* Custom cursor — mix-blend-mode: difference keeps it visible on any bg */
 .cursor {
   width: 12px;
   height: 12px;
@@ -188,5 +187,14 @@ body {
   }
   to {
     height: 60px;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  body {
+    cursor: auto; /* restore default cursor */
+  }
+  .cursor,
+  .cursor-trail {
+    display: none; /* hide custom cursor elements */
   }
 }

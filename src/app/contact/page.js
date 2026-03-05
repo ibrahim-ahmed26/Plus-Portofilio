@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import styles from "./page.module.css";
-
-// TODO: import { db } from '@/lib/firebase'
-// TODO: import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
+import { db } from "../lib/firebase";
 
 const services = [
   "Design & Branding",
@@ -25,7 +25,7 @@ export default function Contact() {
     service: "",
     message: "",
   });
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [status, setStatus] = useState("idle");
 
   const update = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -34,13 +34,14 @@ export default function Contact() {
     e.preventDefault();
     setStatus("loading");
     try {
-      // TODO: swap the timeout below with real Firestore write:
-      // await addDoc(collection(db, 'contacts'), {
-      //   ...form,
-      //   submittedAt: new Date(),
-      // })
-      await new Promise((r) => setTimeout(r, 1200)); // simulate network
+      await addDoc(collection(db, "contacts"), {
+        ...form,
+        submittedAt: new Date(),
+      });
+
       setStatus("success");
+      toast.success("Message sent! We'll be in touch soon 🎉");
+      setTimeout(() => setStatus("idle"), 3000);
       setForm({
         name: "",
         company: "",
@@ -52,6 +53,7 @@ export default function Contact() {
     } catch (err) {
       console.error(err);
       setStatus("error");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 

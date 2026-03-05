@@ -3,6 +3,8 @@ import Navbar from "../app/components/Navbar";
 import Footer from "../app/components/Footer";
 import Cursor from "../app/components/Cursor";
 import LoadingScreen from "./components/LoadingScreen";
+import { Toaster } from "react-hot-toast";
+import Shell from "./components/Shell";
 
 export const metadata = {
   title: "Plus Creative Studio",
@@ -15,10 +17,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <LoadingScreen />
+        <Toaster position="top-center" />
         <Cursor />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <Shell>{children}</Shell>
       </body>
     </html>
   );
