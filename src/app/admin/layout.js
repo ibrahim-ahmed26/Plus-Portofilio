@@ -10,6 +10,7 @@ const navItems = [
   { label: "Projects", href: "/admin/projects", icon: "▲" },
   { label: "Clients", href: "/admin/clients", icon: "◈" },
   { label: "Contacts", href: "/admin/contacts", icon: "✉" },
+  { label: "Users", href: "/admin/users", icon: "👤" },
 ];
 
 export default function AdminLayout({ children }) {
@@ -23,7 +24,7 @@ export default function AdminLayout({ children }) {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
       if (!u && pathname !== "/admin/login") {
-        router.push("/admin/login"); // 👈 not logged in → go to login
+        router.push("/admin/login");
       }
     });
     return () => unsub();

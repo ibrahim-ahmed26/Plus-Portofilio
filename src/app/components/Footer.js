@@ -30,8 +30,16 @@ const socials = [
     href: "https://www.facebook.com/plus.creativestudio/",
     handle: "plus.creativestudio",
   },
-  { label: "TikTok", href: "#", handle: "@plus.eg" },
-  { label: "LinkedIn", href: "#", handle: "plus-creativestudio" },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@plus.eg",
+    handle: "@plus.eg",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/plus-creativestudio",
+    handle: "plus-creativestudio",
+  },
 ];
 
 export default function Footer() {
