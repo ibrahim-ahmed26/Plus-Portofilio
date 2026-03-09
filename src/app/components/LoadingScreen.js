@@ -1,90 +1,80 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./LoadingScreen.module.css";
 
-// "PLUS" splits into individual letters that fill with color
-const LETTERS = ["P", "L", "U", "S"];
-
-export default function LoadingScreen() {
-  const [phase, setPhase] = useState("intro"); // intro → filling → done
-  const [filled, setFilled] = useState(-1); // which letter index is filled
-  const [hidden, setHidden] = useState(false);
+export default function LoadingScreen({ onComplete }) {
+  const [phase, setPhase] = useState("idle"); // idle → reveal → tagline → exit → hidden
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // start filling letters one by one
-    const t0 = setTimeout(() => setPhase("filling"), 400);
+    const t1 = setTimeout(() => setPhase("reveal"), 300);
+    const t2 = setTimeout(() => setPhase("tagline"), 1200);
+    const t3 = setTimeout(() => setPhase("exit"), 2600);
+    const t4 = setTimeout(() => {
+      setPhase("hidden");
+      onComplete?.();
+    }, 3400);
 
-    const timers = LETTERS.map((_, i) =>
-      setTimeout(() => setFilled(i), 500 + i * 260),
-    );
-
-    // after all letters filled, slide the screen up and away
-    const tDone = setTimeout(
-      () => setPhase("done"),
-      500 + LETTERS.length * 260 + 300,
-    );
-    const tHidden = setTimeout(
-      () => setHidden(true),
-      500 + LETTERS.length * 260 + 900,
-    );
+    // Animate progress bar
+    let start = null;
+    const duration = 2200;
+    const animateProgress = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const pct = Math.min((elapsed / duration) * 100, 100);
+      setProgress(Math.round(pct));
+      if (pct < 100) requestAnimationFrame(animateProgress);
+    };
+    const rafId = requestAnimationFrame(animateProgress);
 
     return () => {
-      clearTimeout(t0);
-      timers.forEach(clearTimeout);
-      clearTimeout(tDone);
-      clearTimeout(tHidden);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
-  if (hidden) return null;
+  if (phase === "hidden") return null;
+
+  const isRevealed =
+    phase === "reveal" || phase === "tagline" || phase === "exit";
 
   return (
-    <div className={`${styles.screen} ${phase === "done" ? styles.exit : ""}`}>
-      {/* background rings */}
+    <div className={`${styles.screen} ${phase === "exit" ? styles.exit : ""}`}>
+      {/* Spinning background rings — exactly as before */}
       <div className={styles.rings} aria-hidden="true">
         {[1, 2, 3, 4].map((n) => (
           <div key={n} className={`${styles.ring} ${styles[`ring${n}`]}`} />
         ))}
       </div>
 
-      {/* letters */}
+      {/* Logo + tagline */}
       <div className={styles.wordWrap}>
-        <div className={styles.word}>
-          {LETTERS.map((letter, i) => (
-            <span
-              key={i}
-              className={`${styles.letter} ${filled >= i ? styles.letterFilled : ""}`}
-              style={{ transitionDelay: `${i * 40}ms` }}
-            >
-              {/* outline version always visible */}
-              <span className={styles.letterOutline}>{letter}</span>
-              {/* filled version clips in */}
-              <span className={styles.letterFill}>{letter}</span>
-            </span>
-          ))}
+        <div
+          className={`${styles.logoBox} ${isRevealed ? styles.logoRevealed : ""}`}
+        >
+          <Image
+            src="/plus.png"
+            alt="Plus Creative Studio"
+            fill
+            style={{ objectFit: "contain" }}
+            priority
+          />
         </div>
 
         <p
-          className={`${styles.tagline} ${phase === "filling" ? styles.taglineVisible : ""}`}
+          className={`${styles.tagline} ${phase === "tagline" || phase === "exit" ? styles.taglineVisible : ""}`}
         >
           Creative Studio
         </p>
       </div>
 
-      {/* progress bar */}
+      {/* Progress bar */}
       <div className={styles.progressWrap}>
-        <div
-          className={styles.progressBar}
-          style={{
-            width: `${
-              phase === "filling"
-                ? Math.round(((filled + 1) / LETTERS.length) * 100)
-                : phase === "done"
-                  ? 100
-                  : 0
-            }%`,
-          }}
-        />
+        <div className={styles.progressBar} style={{ width: `${progress}%` }} />
       </div>
     </div>
   );

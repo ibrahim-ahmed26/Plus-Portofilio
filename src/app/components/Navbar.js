@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,8 +12,6 @@ const links = [
   { href: "/projects", label: "Projects" },
 ];
 
-// Pages where the hero behind the navbar is dark/colored
-// → links should be cream/white until user scrolls
 const DARK_HERO_PAGES = new Set(["/", "/about", "/services", "/contact"]);
 
 export default function Navbar() {
@@ -39,11 +38,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Determine the visual "theme" of the navbar right now
-  // menuOpen → always dark-panel mode (cream text, nav is transparent)
-  // scrolled  → always light cream pill (dark text)
-  // heroDark  → cream text on colored/dark hero
-  // default   → dark text on cream page
   const theme = menuOpen
     ? "menu-open"
     : scrolled
@@ -60,7 +54,17 @@ export default function Navbar() {
           className={styles.logo}
           onClick={() => setMenuOpen(false)}
         >
-          Pl<span>us</span>
+          <div
+            className={`${styles.logoImgWrap} ${styles[`logoImgWrap--${theme}`] || ""}`}
+          >
+            <Image
+              src="/plus.png"
+              alt="Plus Creative Studio"
+              fill
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </div>
         </Link>
 
         <ul className={styles.links}>

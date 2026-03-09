@@ -40,7 +40,7 @@ export default function Contact() {
       });
 
       setStatus("success");
-      toast.success("Message sent! We'll be in touch soon 🎉");
+      toast.success("Message sent! We'll be in touch soon");
       setTimeout(() => setStatus("idle"), 3000);
       setForm({
         name: "",

@@ -2,6 +2,9 @@ import { collection, getDocs } from "firebase/firestore";
 import styles from "./page.module.css";
 import { db } from "../lib/firebase";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "Projects | Plus Creative Studio",
 };
@@ -50,6 +53,7 @@ export default async function Projects() {
           ))}
         </div>
       </section>
+
       <section className={styles.clients}>
         <p className="section-label">Clients We&apos;ve Served</p>
         <h2 className={styles.clientsHeading}>

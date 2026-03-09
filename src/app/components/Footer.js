@@ -1,32 +1,41 @@
-import Link from 'next/link'
-import styles from './Footer.module.css'
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./Footer.module.css";
 
 const navLinks = [
-  { href: '/',         label: 'Home' },
-  { href: '/about',    label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/contact',  label: 'Contact' },
-]
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/projects", label: "Projects" },
+  { href: "/contact", label: "Contact" },
+];
 
 const services = [
-  'Design & Branding',
-  'Digital Marketing',
-  'Social Media',
-  'Event Management',
-  'Media Production',
-  'UI & UX Design',
-]
+  "Design & Branding",
+  "Digital Marketing",
+  "Social Media",
+  "Event Management",
+  "Media Production",
+  "UI & UX Design",
+];
 
 const socials = [
-  { label: 'Instagram', href: 'https://instagram.com/plus.creativestudio', handle: '@plus.creativestudio' },
-  { label: 'Facebook',  href: '#',                                          handle: 'plus.creativestudio' },
-  { label: 'TikTok',    href: '#',                                          handle: '@plus.eg' },
-  { label: 'LinkedIn',  href: '#',                                          handle: 'plus-creativestudio' },
-]
+  {
+    label: "Instagram",
+    href: "https://instagram.com/plus.creativestudio",
+    handle: "@plus.creativestudio",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/plus.creativestudio/",
+    handle: "plus.creativestudio",
+  },
+  { label: "TikTok", href: "#", handle: "@plus.eg" },
+  { label: "LinkedIn", href: "#", handle: "plus-creativestudio" },
+];
 
 export default function Footer() {
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear();
 
   return (
     <footer className={styles.footer}>
@@ -48,18 +57,28 @@ export default function Footer() {
         {/* Brand column */}
         <div className={styles.brand}>
           <Link href="/" className={styles.logo}>
-            Pl<span>us</span>
+            <div className={styles.logoImgWrap}>
+              <Image
+                src="/plus.png"
+                alt="Plus Creative Studio"
+                fill
+                style={{ objectFit: "contain" }}
+              />
+            </div>
           </Link>
           <p className={styles.tagline}>
-            A full-service digital agency and creative partner for major brands in Egypt
-            &amp; the Middle East.
+            A full-service digital agency and creative partner for major brands
+            in Egypt &amp; the Middle East.
           </p>
           <div className={styles.contact}>
             <a href="tel:01118887031" className={styles.contactItem}>
               <span className={styles.contactIcon}>📞</span>
               01118887031
             </a>
-            <a href="mailto:INFO.PLUSCREATIVESTUDIO@gmail.com" className={styles.contactItem}>
+            <a
+              href="mailto:INFO.PLUSCREATIVESTUDIO@gmail.com"
+              className={styles.contactItem}
+            >
               <span className={styles.contactIcon}>✉</span>
               INFO.PLUSCREATIVESTUDIO@gmail.com
             </a>
@@ -76,7 +95,9 @@ export default function Footer() {
           <ul className={styles.colLinks}>
             {navLinks.map(({ href, label }) => (
               <li key={href}>
-                <Link href={href} className={styles.colLink}>{label}</Link>
+                <Link href={href} className={styles.colLink}>
+                  {label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -86,9 +107,11 @@ export default function Footer() {
         <div className={styles.col}>
           <h3 className={styles.colTitle}>Services</h3>
           <ul className={styles.colLinks}>
-            {services.map(s => (
+            {services.map((s) => (
               <li key={s}>
-                <Link href="/services" className={styles.colLink}>{s}</Link>
+                <Link href="/services" className={styles.colLink}>
+                  {s}
+                </Link>
               </li>
             ))}
           </ul>
@@ -98,7 +121,7 @@ export default function Footer() {
         <div className={styles.col}>
           <h3 className={styles.colTitle}>Follow Us</h3>
           <ul className={styles.colLinks}>
-            {socials.map(s => (
+            {socials.map((s) => (
               <li key={s.label}>
                 <a
                   href={s.href}
@@ -120,10 +143,8 @@ export default function Footer() {
         <p className={styles.copy}>
           © {year} Plus Creative Studio. All rights reserved.
         </p>
-        <p className={styles.madein}>
-          Made with ✦ in Cairo
-        </p>
+        <p className={styles.madein}>Made with ✦ in Cairo</p>
       </div>
     </footer>
-  )
+  );
 }

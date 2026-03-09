@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
 
   /* smooth everything */
   transition:
@@ -42,21 +43,99 @@
 /* ═══════════════════════════════════════
    LOGO
 ═══════════════════════════════════════ */
-.logo {
-  font-family: "Playfair Display", serif;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -1px;
-  text-decoration: none;
-  position: relative;
-  z-index: 201;
-  transition: color 0.3s;
+/* ═══════════════════════════════════════
+   LOGO IMAGE  (replaces text logo)
+═══════════════════════════════════════ */
 
-  /* default: orange on cream pages */
-  color: var(--orange);
+/* Remove old text styling — logo is now an <Image> */
+.logo {
+  /* override the font styles set above */
+  font-size: unset;
+  font-family: unset;
+  font-weight: unset;
+  letter-spacing: unset;
+  color: unset;
 }
-.logo span {
-  font-style: italic;
+
+.logoImgWrap {
+  position: relative;
+  width: 100px;
+  height: 34px;
+  /* mix-blend-mode is set inline per theme (screen / multiply) */
+  transition: filter 0.3s ease;
+  filter: drop-shadow(0 0 6px rgba(232, 62, 11, 0.25));
+}
+
+.logo:hover .logoImgWrap {
+  filter: drop-shadow(0 0 12px rgba(232, 62, 11, 0.5));
+}
+
+/* ═══════════════════════════════════════
+   LOGO IMAGE  (replaces text logo)
+═══════════════════════════════════════ */
+.logo {
+  font-size: unset;
+  font-family: unset;
+  font-weight: unset;
+  letter-spacing: unset;
+  color: unset;
+  margin-bottom: 0;
+}
+
+.logoImgWrap {
+  position: relative;
+  width: 110px;
+  height: 38px;
+  transition: filter 0.3s ease;
+}
+
+/* ── Default (cream pages, dark text context) ──
+   multiply strips black into cream background */
+.logoImgWrap {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 0 0px rgba(232, 62, 11, 0));
+}
+
+/* ── On dark/transparent background (most hero pages) ──
+   screen strips black, red logo glows on dark */
+.logoImgWrap--on-dark,
+.logoImgWrap--menu-open {
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 8px rgba(232, 62, 11, 0.4));
+}
+
+/* ── Orange hero fix ──
+   screen & multiply both fail on orange bg.
+   Invert the image to cream so it's readable. */
+.nav[data-theme="on-dark"] .logoImgWrap--on-dark {
+  mix-blend-mode: normal;
+  filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+}
+
+/* ── Scrolled (cream bar) ──
+   multiply blends cleanly into the cream background */
+.logoImgWrap--scrolled {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 0 4px rgba(232, 62, 11, 0.15));
+}
+
+/* ── Hover glow on all themes ── */
+.logo:hover .logoImgWrap--on-dark,
+.logo:hover .logoImgWrap--menu-open {
+  filter: drop-shadow(0 0 14px rgba(232, 62, 11, 0.65));
+}
+.logo:hover .logoImgWrap--scrolled {
+  filter: drop-shadow(0 0 8px rgba(232, 62, 11, 0.3));
+}
+
+/* ── Breathing room below logo ── */
+.nav {
+  margin-bottom: 0; /* nav itself doesn't need it */
+}
+
+/* Spacer so content below the fixed nav isn't hidden under it */
+.navSpacer {
+  height: 90px;
 }
 
 /* on dark hero → cream logo */

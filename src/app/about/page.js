@@ -37,7 +37,7 @@ export default function About() {
           <div className="ring" />
           <div className="ring" />
         </div>
-        <p className={styles.eyebrow}>01 — Who We Are</p>
+        <p className={styles.eyebrow}>02 — Who We Are</p>
         <h1 className={styles.title}>
           We Are <em>Plus</em>
         </h1>

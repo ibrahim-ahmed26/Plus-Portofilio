@@ -74,57 +74,27 @@
   z-index: 1;
 }
 
-.word {
-  display: flex;
-  gap: 4px;
-}
-
-/* ── Each letter ── */
-.letter {
+/* ── Logo box (replaces the .word + .letter blocks) ── */
+.logoBox {
   position: relative;
-  display: inline-block;
-  font-family: "Playfair Display", serif;
-  font-size: clamp(72px, 18vw, 160px);
-  font-weight: 900;
-  letter-spacing: -4px;
-  line-height: 1;
-  /* reserve space */
-  width: 1ch;
-  text-align: center;
+  width: clamp(200px, 38vw, 460px);
+  aspect-ratio: 3 / 1;
+
+  /* start hidden, shifted down slightly */
+  opacity: 0;
+  transform: scale(0.88) translateY(14px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* strip the black from the PNG — logo is red on black */
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 32px rgba(232, 62, 11, 0.4));
 }
 
-/* outline layer — always shown */
-.letterOutline {
-  display: block;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(245, 240, 220, 0.18);
-  position: absolute;
-  inset: 0;
-  text-align: center;
-}
-
-/* fill layer — clips up from bottom */
-.letterFill {
-  display: block;
-  color: var(--orange);
-  position: absolute;
-  inset: 0;
-  text-align: center;
-
-  /* clip from bottom to top */
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* when filled — reveal the color */
-.letterFilled .letterFill {
-  clip-path: inset(0% 0 0 0);
-}
-
-/* also brighten the outline when filled */
-.letterFilled .letterOutline {
-  -webkit-text-stroke-color: rgba(245, 240, 220, 0);
-  transition: -webkit-text-stroke-color 0.3s;
+.logoRevealed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
 }
 
 /* ── Tagline ── */

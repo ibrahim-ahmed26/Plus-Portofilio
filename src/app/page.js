@@ -16,10 +16,6 @@ export default function Home() {
           <div className="ring" />
         </div>
 
-        <p className={styles.eyebrow}>
-          Full-Service Digital Agency · Cairo, Egypt
-        </p>
-
         <h1 className={styles.title}>
           We Make
           <em>Brands</em>
@@ -28,8 +24,9 @@ export default function Home() {
 
         <div className={styles.bottom}>
           <p className={styles.desc}>
-            A creative partner for huge commercial brands in the Egyptian &amp;
-            Middle East market — where creativity meets reality.
+            Full-Service Digital Agency · Cairo, Egypt A creative partner for
+            huge commercial brands in the Egyptian &amp; Middle East market —
+            where creativity meets reality.
           </p>
           <Link href="/services" className={styles.btn}>
             Explore Work <span className={styles.arrow}>→</span>

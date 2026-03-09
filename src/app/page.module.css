@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
-  padding: 0 60px 80px;
+  padding: 20px 60px 80px;
 }
 
 .blob1 {
@@ -48,6 +48,7 @@
   letter-spacing: 4px;
   text-transform: uppercase;
   margin-bottom: 20px;
+  margin-top: 30px;
   position: relative;
   z-index: 1;
   animation: fadeUp 0.8s ease 0.2s both;
@@ -299,7 +300,7 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .hero {
-    padding: 0 24px 60px;
+    padding: 20px 24px 60px;
   }
   .bottom {
     flex-direction: column;

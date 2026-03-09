@@ -22,13 +22,15 @@
 }
 
 .ctaHeading {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: clamp(32px, 4vw, 52px);
   font-weight: 900;
   color: var(--cream);
   line-height: 1.1;
 }
-.ctaHeading em { font-style: italic; }
+.ctaHeading em {
+  font-style: italic;
+}
 
 .ctaBtn {
   display: inline-flex;
@@ -45,7 +47,10 @@
   border-radius: 2px;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 0.3s, color 0.3s, gap 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    gap 0.3s;
 }
 .ctaBtn:hover {
   background: var(--dark);
@@ -63,19 +68,35 @@
 }
 
 /* Brand column */
-.brand { }
+.brand {
+}
 
+/* ── LOGO IMAGE ── */
 .logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  font-weight: 900;
-  color: var(--orange);
-  letter-spacing: -1px;
-  text-decoration: none;
   display: inline-block;
   margin-bottom: 20px;
+  /* remove old text styles */
+  font-size: unset;
+  font-family: unset;
+  font-weight: unset;
+  letter-spacing: unset;
+  color: unset;
+  text-decoration: none;
 }
-.logo span { font-style: italic; }
+
+.logoImgWrap {
+  position: relative;
+  width: 130px;
+  height: 44px;
+  /* dark background → screen strips black, red logo glows */
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 10px rgba(232, 62, 11, 0.35));
+  transition: filter 0.3s ease;
+}
+
+.logo:hover .logoImgWrap {
+  filter: drop-shadow(0 0 18px rgba(232, 62, 11, 0.6));
+}
 
 .tagline {
   font-size: 14px;
@@ -100,12 +121,18 @@
   text-decoration: none;
   transition: color 0.3s;
 }
-.contactItem:hover { color: var(--orange); }
+.contactItem:hover {
+  color: var(--orange);
+}
 
-.contactIcon { font-size: 14px; flex-shrink: 0; }
+.contactIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
 
 /* Link columns */
-.col { }
+.col {
+}
 
 .colTitle {
   font-size: 10px;
@@ -132,7 +159,9 @@
   color: rgba(245, 240, 220, 0.45);
   text-decoration: none;
   border-bottom: 1px solid rgba(245, 240, 220, 0.05);
-  transition: color 0.3s, padding-left 0.3s;
+  transition:
+    color 0.3s,
+    padding-left 0.3s;
 }
 .colLink:hover {
   color: var(--cream);
@@ -144,7 +173,9 @@
   color: rgba(245, 240, 220, 0.45);
   transition: color 0.3s;
 }
-.colLink:hover .socialLabel { color: var(--cream); }
+.colLink:hover .socialLabel {
+  color: var(--cream);
+}
 
 .socialHandle {
   font-size: 11px;
@@ -174,13 +205,33 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 1100px) {
-  .main { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .brand { grid-column: span 2; }
+  .main {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .brand {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 700px) {
-  .ctaBand { flex-direction: column; align-items: flex-start; padding: 52px 24px; }
-  .main { grid-template-columns: 1fr 1fr; padding: 52px 24px; gap: 36px; }
-  .brand { grid-column: span 2; }
-  .bottom { flex-direction: column; gap: 8px; padding: 20px 24px; text-align: center; }
+  .ctaBand {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 52px 24px;
+  }
+  .main {
+    grid-template-columns: 1fr 1fr;
+    padding: 52px 24px;
+    gap: 36px;
+  }
+  .brand {
+    grid-column: span 2;
+  }
+  .bottom {
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 24px;
+    text-align: center;
+  }
 }
