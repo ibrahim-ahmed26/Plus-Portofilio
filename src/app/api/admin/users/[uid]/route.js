@@ -2,10 +2,10 @@ import admin from "@/app/lib/firebaseAdmin";
 
 const SUPER_ADMIN = process.env.NEXT_PUBLIC_SUPER_ADMIN_EMAIL;
 
-// DELETE — remove user
 export async function DELETE(req, { params }) {
   try {
-    const user = await admin.auth().getUser(params.uid);
+    const { uid } = await params; // 👈 await params
+    const user = await admin.auth().getUser(uid);
 
     if (user.email === SUPER_ADMIN) {
       return Response.json(
@@ -14,17 +14,17 @@ export async function DELETE(req, { params }) {
       );
     }
 
-    await admin.auth().deleteUser(params.uid);
+    await admin.auth().deleteUser(uid);
     return Response.json({ success: true });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
   }
 }
 
-// PATCH — disable or enable user
 export async function PATCH(req, { params }) {
   try {
-    const user = await admin.auth().getUser(params.uid);
+    const { uid } = await params;
+    const user = await admin.auth().getUser(uid);
 
     if (user.email === SUPER_ADMIN) {
       return Response.json(
@@ -34,7 +34,7 @@ export async function PATCH(req, { params }) {
     }
 
     const { disabled } = await req.json();
-    await admin.auth().updateUser(params.uid, { disabled });
+    await admin.auth().updateUser(uid, { disabled });
     return Response.json({ success: true });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
