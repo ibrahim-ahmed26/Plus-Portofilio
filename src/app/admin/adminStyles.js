@@ -21,8 +21,9 @@ export const s = {
     color: "#1a1209",
     marginBottom: 4,
   },
-  row: { display: "flex", gap: 12 },
+  row: { display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" },
   input: {
+    flex: 1,
     width: "100%",
     padding: "10px 14px",
     borderRadius: 8,
@@ -31,6 +32,7 @@ export const s = {
     fontFamily: "inherit",
     outline: "none",
     boxSizing: "border-box",
+    minWidth: 180,
   },
   textarea: {
     width: "100%",
@@ -54,7 +56,7 @@ export const s = {
     fontWeight: 700,
     fontSize: 14,
     cursor: "pointer",
-    flex: 1,
+    whiteSpace: "nowrap",
   },
   btnCancel: {
     background: "#f1f5f9",
@@ -65,6 +67,7 @@ export const s = {
     fontWeight: 600,
     fontSize: 14,
     cursor: "pointer",
+    whiteSpace: "nowrap",
   },
   btnEdit: {
     background: "#eff6ff",
@@ -86,11 +89,37 @@ export const s = {
     fontWeight: 600,
     cursor: "pointer",
   },
+  btnDisable: {
+    background: "#fef9c3",
+    color: "#854d0e",
+    border: "none",
+    borderRadius: 6,
+    padding: "5px 12px",
+    fontSize: 12,
+    fontWeight: 600,
+    cursor: "pointer",
+  },
+  btnEnable: {
+    background: "#dcfce7",
+    color: "#166534",
+    border: "none",
+    borderRadius: 6,
+    padding: "5px 12px",
+    fontSize: 12,
+    fontWeight: 600,
+    cursor: "pointer",
+  },
+  tableWrapper: {
+    overflowX: "auto",
+    WebkitOverflowScrolling: "touch",
+    borderRadius: 16,
+    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+  },
   table: {
     background: "#fff",
     borderRadius: 16,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
     overflow: "hidden",
+    minWidth: 700,
   },
   tableHead: {
     display: "flex",
@@ -104,6 +133,7 @@ export const s = {
     textTransform: "uppercase",
     color: "#94a3b8",
     borderBottom: "1px solid #f1f5f9",
+    whiteSpace: "nowrap",
   },
   tableRow: {
     display: "flex",
@@ -112,6 +142,7 @@ export const s = {
     padding: "16px 20px",
     borderBottom: "1px solid #f8f7f4",
     fontSize: 14,
+    whiteSpace: "nowrap",
   },
   tag: {
     background: "#f1f5f9",
@@ -121,17 +152,30 @@ export const s = {
     fontSize: 11,
     fontWeight: 600,
   },
-  empty: { textAlign: "center", color: "#94a3b8", padding: "40px 0" },
-  tableWrapper: {
-    overflowX: "auto",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: 16,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+  badge: {
+    borderRadius: 99,
+    padding: "3px 10px",
+    fontSize: 11,
+    fontWeight: 700,
   },
-  table: {
-    background: "#fff",
-    borderRadius: 16,
-    overflow: "hidden",
-    minWidth: 600,
+  superBadge: {
+    fontSize: 11,
+    color: "#e83e0b",
+    fontWeight: 700,
+    padding: "5px 8px",
+    whiteSpace: "nowrap",
+  },
+  error: {
+    fontSize: 13,
+    color: "#e11d48",
+    background: "#fff1f2",
+    borderRadius: 8,
+    padding: "10px 14px",
+    margin: 0,
+  },
+  empty: {
+    textAlign: "center",
+    color: "#94a3b8",
+    padding: "40px 0",
   },
 };

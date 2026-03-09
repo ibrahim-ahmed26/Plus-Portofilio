@@ -62,7 +62,6 @@ export default function AdminProjects() {
 
   return (
     <div>
-      {/* Header */}
       <h1 style={s.heading}>▲ Projects</h1>
 
       {/* Form */}
@@ -96,7 +95,7 @@ export default function AdminProjects() {
           required
         />
 
-        {/* Background color picker */}
+        {/* Color picker */}
         <div style={s.colorRow}>
           <label style={s.colorLabel}>Card Background Color</label>
           <div style={s.colorInputWrapper}>
@@ -107,18 +106,12 @@ export default function AdminProjects() {
               style={s.colorPicker}
             />
             <input
-              style={{ ...s.input, width: 120 }}
+              style={{ ...s.input, width: 120, flex: "0 0 120px" }}
               placeholder="#1a1209"
               value={form.bg}
               onChange={(e) => setForm({ ...form, bg: e.target.value })}
             />
-            {/* Live preview */}
-            <div
-              style={{
-                ...s.colorPreview,
-                background: form.bg,
-              }}
-            >
+            <div style={{ ...s.colorPreview, background: form.bg }}>
               <span style={s.colorPreviewText}>{form.client || "Preview"}</span>
             </div>
           </div>
@@ -149,47 +142,54 @@ export default function AdminProjects() {
       ) : projects.length === 0 ? (
         <p style={s.empty}>No projects yet. Add one above!</p>
       ) : (
-        <div style={s.table}>
-          <div style={s.tableHead}>
-            <span style={{ flex: "0 0 40px" }}>BG</span>
-            <span style={{ flex: 2 }}>Client</span>
-            <span style={{ flex: 2 }}>Title</span>
-            <span style={{ flex: 3 }}>Category</span>
-            <span style={{ flex: "0 0 120px" }}>Actions</span>
-          </div>
-
-          {projects.map((p) => (
-            <div key={p.id} style={s.tableRow}>
-              {/* Color swatch */}
-              <div
-                style={{
-                  flex: "0 0 40px",
-                  width: 28,
-                  height: 28,
-                  borderRadius: 6,
-                  background: p.bg,
-                  border: "2px solid #e2e8f0",
-                }}
-              />
-              <span style={{ flex: 2, fontWeight: 700, color: "#1a1209" }}>
-                {p.client}
-              </span>
-              <span style={{ flex: 2, fontWeight: 600, color: "#1a1209" }}>
-                {p.title}
-              </span>
-              <span style={{ flex: 3, color: "#64748b", fontSize: 13 }}>
-                {p.category}
-              </span>
-              <div style={{ flex: "0 0 120px", display: "flex", gap: 8 }}>
-                <button style={s.btnEdit} onClick={() => startEdit(p)}>
-                  Edit
-                </button>
-                <button style={s.btnDelete} onClick={() => handleDelete(p.id)}>
-                  Delete
-                </button>
-              </div>
+        <div style={s.tableWrapper}>
+          <div style={s.table}>
+            {/* Head */}
+            <div style={s.tableHead}>
+              <span style={{ flex: "0 0 40px" }}>BG</span>
+              <span style={{ flex: 2 }}>Client</span>
+              <span style={{ flex: 2 }}>Title</span>
+              <span style={{ flex: 3 }}>Category</span>
+              <span style={{ flex: "0 0 100px" }}>Actions</span>
             </div>
-          ))}
+
+            {/* Rows */}
+            {projects.map((p) => (
+              <div key={p.id} style={s.tableRow}>
+                <div
+                  style={{
+                    flex: "0 0 40px",
+                    width: 28,
+                    height: 28,
+                    borderRadius: 6,
+                    background: p.bg,
+                    border: "2px solid #e2e8f0",
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ flex: 2, fontWeight: 700, color: "#1a1209" }}>
+                  {p.client}
+                </span>
+                <span style={{ flex: 2, fontWeight: 600, color: "#1a1209" }}>
+                  {p.title}
+                </span>
+                <span style={{ flex: 3, color: "#64748b", fontSize: 13 }}>
+                  {p.category}
+                </span>
+                <div style={{ flex: "0 0 120px", display: "flex", gap: 8 }}>
+                  <button style={s.btnEdit} onClick={() => startEdit(p)}>
+                    Edit
+                  </button>
+                  <button
+                    style={s.btnDelete}
+                    onClick={() => handleDelete(p.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
