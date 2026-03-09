@@ -10,6 +10,11 @@ export const metadata = {
   title: "Plus Creative Studio",
   description:
     "Full-service digital agency and creative partner for major brands in Egypt & the Middle East.",
+  icons: {
+    icon: "/plus.png", // standard favicon (tab icon)
+    apple: "/plus.png", // iOS home screen icon
+    shortcut: "/plus.png", // legacy browsers
+  },
 };
 
 export default function RootLayout({ children }) {
