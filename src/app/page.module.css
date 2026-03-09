@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
-  padding: 20px 60px 80px;
+  padding: 100px 60px 80px; /* was 20px — now clears the fixed nav (72px) + breathing room */
 }
 
 .blob1 {
@@ -300,7 +300,7 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .hero {
-    padding: 20px 24px 60px;
+    padding: 90px 24px 60px; /* keep nav clearance on mobile too */
   }
   .bottom {
     flex-direction: column;

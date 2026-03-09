@@ -1,0 +1,119 @@
+.section {
+  padding: 80px 0 120px;
+  overflow: hidden;
+}
+
+.heading {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 900;
+  margin-bottom: 56px;
+  margin-top: 12px;
+  line-height: 1;
+  padding-left: 60px;
+}
+.heading em {
+  color: var(--orange);
+  font-style: italic;
+}
+
+/* Outer track — masks overflow */
+.track {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+/* The moving rail */
+.rail {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ── Left: scrolls toward the left (normal marquee) ── */
+@keyframes scrollLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+.left {
+  animation: scrollLeft 28s linear infinite;
+}
+.left:hover {
+  animation-play-state: paused;
+}
+
+/* ── Right: scrolls toward the right (reverse marquee) ── */
+@keyframes scrollRight {
+  from {
+    transform: translateX(-33.333%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.right {
+  animation: scrollRight 28s linear infinite;
+}
+.right:hover {
+  animation-play-state: paused;
+}
+
+/* Each client pill */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 40px;
+  border: 1px solid rgba(26, 18, 9, 0.08);
+  margin-right: 2px;
+  background: var(--cream);
+  white-space: nowrap;
+  cursor: default;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+  flex-shrink: 0;
+}
+.item:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.item:hover .dot {
+  background: rgba(245, 240, 220, 0.6);
+}
+
+.name {
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: -0.3px;
+  transition: color 0.3s;
+}
+.item:hover .name {
+  color: var(--cream);
+}
+
+@media (max-width: 900px) {
+  .heading {
+    padding-left: 24px;
+    font-size: clamp(28px, 7vw, 40px);
+  }
+  .section {
+    padding-bottom: 80px;
+  }
+}
