@@ -1,4 +1,5 @@
 import styles from "./page.module.css";
+import AboutAnimations from "../components/AboutAnimations";
 
 export const metadata = {
   title: "About Us | Plus Creative Studio",
@@ -30,15 +31,17 @@ const values = [
 export default function About() {
   return (
     <>
-      {/* PAGE HERO */}
+      <AboutAnimations />
+
+      {/* HERO */}
       <section className={styles.hero}>
         <div className={styles.heroRings} aria-hidden="true">
           <div className="ring" />
           <div className="ring" />
           <div className="ring" />
         </div>
-        <p className={styles.eyebrow}>02 — Who We Are</p>
-        <h1 className={styles.title}>
+        <p className={`${styles.eyebrow} about-eyebrow`}>02 — Who We Are</p>
+        <h1 className={`${styles.title} about-title`}>
           We Are <em>Plus</em>
         </h1>
       </section>
@@ -47,20 +50,20 @@ export default function About() {
       <section className={styles.story}>
         <div className={styles.storyGrid}>
           <div>
-            <p className="section-label">Our Story</p>
-            <h2 className={styles.storyHeading}>
+            <p className="section-label about-story-label">Our Story</p>
+            <h2 className={`${styles.storyHeading} about-story-heading`}>
               Built on the belief that <em>creativity and reality</em>{" "}
               aren&apos;t opposites.
             </h2>
           </div>
           <div>
-            <p className={styles.storyText}>
+            <p className={`${styles.storyText} about-story-text`}>
               Plus Creative Studio was born from a simple but powerful idea:
               that the best creative work doesn&apos;t just look stunning — it
               works. We are a full-service digital agency and creative partner
               for major commercial brands in the Egyptian market.
             </p>
-            <p className={styles.storyText}>
+            <p className={`${styles.storyText} about-story-text`}>
               Our team combines diverse experiences, creative ambition, and a
               deep understanding of the Egyptian and Middle Eastern market. From
               Pepsi to Gatorade, from real estate to football — we&apos;ve built
@@ -74,7 +77,7 @@ export default function About() {
       <section className={styles.vision}>
         <div className={styles.visionInner}>
           <p className="section-label light">Our Vision</p>
-          <blockquote className={styles.visionQuote}>
+          <blockquote className={`${styles.visionQuote} about-vision`}>
             To be the creative partner for startups and established brands alike
             — developing their presence, building their identity, and combining{" "}
             <em>creativity with reality</em> in a way that shows the difference.
@@ -82,14 +85,15 @@ export default function About() {
         </div>
       </section>
 
+      {/* VALUES */}
       <section className={styles.values}>
         <p className="section-label">What We Stand For</p>
         <h2 className={styles.valuesHeading}>
           Our <em>Values</em>
         </h2>
-        <div className={styles.valuesGrid}>
+        <div className={`${styles.valuesGrid} about-values-grid`}>
           {values.map((v, i) => (
-            <div key={i} className={styles.valueCard}>
+            <div key={i} className={`${styles.valueCard} about-value-card`}>
               <div className={styles.valueIcon}>{v.icon}</div>
               <h3 className={styles.valueName}>{v.title}</h3>
               <p className={styles.valueDesc}>{v.desc}</p>
@@ -97,14 +101,16 @@ export default function About() {
           ))}
         </div>
       </section>
-      <section className={styles.stats}>
+
+      {/* STATS */}
+      <section className={`${styles.stats} about-stats`}>
         {[
           { num: "10+", label: "Years in the market" },
           { num: "50+", label: "Brands partnered" },
           { num: "100+", label: "Campaigns launched" },
           { num: "4", label: "Countries reached" },
         ].map((s) => (
-          <div key={s.label} className={styles.statItem}>
+          <div key={s.label} className={`${styles.statItem} about-stat`}>
             <span className={styles.statNum}>{s.num}</span>
             <span className={styles.statLabel}>{s.label}</span>
           </div>

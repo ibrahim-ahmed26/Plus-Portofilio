@@ -2,6 +2,7 @@ import { collection, getDocs } from "firebase/firestore";
 import styles from "./page.module.css";
 import { db } from "../lib/firebase";
 import ClientsMarquee from "../components/ClientsMarquee";
+import ProjectsAnimations from "../components/ProjectAnimations";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -25,19 +26,23 @@ export default async function Projects() {
 
   return (
     <>
+      <ProjectsAnimations />
+
+      {/* Hero */}
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>04 — Our Work</p>
-        <h1 className={styles.title}>
+        <p className={`${styles.eyebrow} proj-eyebrow`}>04 — Our Work</p>
+        <h1 className={`${styles.title} proj-title`}>
           Featured <em>Projects</em>
         </h1>
       </section>
 
+      {/* Grid */}
       <section className={styles.projectsSection}>
-        <div className={styles.grid}>
+        <div className={`${styles.grid} proj-grid`}>
           {projects.map((p, i) => (
             <article
               key={p.id}
-              className={`${styles.card} ${i === 0 || i === 5 ? styles.wide : ""}`}
+              className={`${styles.card} ${p.wide ? styles.wide : ""} proj-card`}
               style={{ "--card-bg": p.bg }}
             >
               <div className={styles.cardInner}>
@@ -55,6 +60,7 @@ export default async function Projects() {
         </div>
       </section>
 
+      {/* Clients */}
       <ClientsMarquee clients={clients} />
     </>
   );

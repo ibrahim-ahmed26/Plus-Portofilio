@@ -120,51 +120,46 @@ export default function AdminUsers() {
               <span style={{ flex: "0 0 160px" }}>Actions</span>
             </div>
 
-            {users.map((u) => (
-              <div key={u.uid} style={s.tableRow}>
-                <span style={{ flex: 3, fontWeight: 600, color: "#1a1209" }}>
-                  {u.email}
-                </span>
-                <span style={{ flex: 2, color: "#64748b", fontSize: 13 }}>
-                  {formatDate(u.createdAt)}
-                </span>
-                <span style={{ flex: 2, color: "#64748b", fontSize: 13 }}>
-                  {formatDate(u.lastLogin)}
-                </span>
-                <span style={{ flex: 1 }}>
-                  <span
-                    style={{
-                      ...s.badge,
-                      background: u.disabled ? "#fff1f2" : "#dcfce7",
-                      color: u.disabled ? "#e11d48" : "#166534",
-                    }}
-                  >
-                    {u.disabled ? "Disabled" : "Active"}
+            {users
+              .filter((u) => u.email !== SUPER_ADMIN) // 👈 add this
+              .map((u) => (
+                <div key={u.uid} style={s.tableRow}>
+                  <span style={{ flex: 3, fontWeight: 600, color: "#1a1209" }}>
+                    {u.email}
                   </span>
-                </span>
-                <div style={{ flex: "0 0 160px", display: "flex", gap: 8 }}>
-                  {u.email !== SUPER_ADMIN && (
-                    <>
-                      <button
-                        style={u.disabled ? s.btnEnable : s.btnDisable}
-                        onClick={() => handleToggle(u.uid, u.disabled)}
-                      >
-                        {u.disabled ? "Enable" : "Disable"}
-                      </button>
-                      <button
-                        style={s.btnDelete}
-                        onClick={() => handleDelete(u.uid)}
-                      >
-                        Delete
-                      </button>
-                    </>
-                  )}
-                  {u.email === SUPER_ADMIN && (
-                    <span style={s.superBadge}>⭐ Super Admin</span>
-                  )}
+                  <span style={{ flex: 2, color: "#64748b", fontSize: 13 }}>
+                    {formatDate(u.createdAt)}
+                  </span>
+                  <span style={{ flex: 2, color: "#64748b", fontSize: 13 }}>
+                    {formatDate(u.lastLogin)}
+                  </span>
+                  <span style={{ flex: 1 }}>
+                    <span
+                      style={{
+                        ...s.badge,
+                        background: u.disabled ? "#fff1f2" : "#dcfce7",
+                        color: u.disabled ? "#e11d48" : "#166534",
+                      }}
+                    >
+                      {u.disabled ? "Disabled" : "Active"}
+                    </span>
+                  </span>
+                  <div style={{ flex: "0 0 160px", display: "flex", gap: 8 }}>
+                    <button
+                      style={u.disabled ? s.btnEnable : s.btnDisable}
+                      onClick={() => handleToggle(u.uid, u.disabled)}
+                    >
+                      {u.disabled ? "Enable" : "Disable"}
+                    </button>
+                    <button
+                      style={s.btnDelete}
+                      onClick={() => handleDelete(u.uid)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       )}

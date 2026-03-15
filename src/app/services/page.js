@@ -1,39 +1,46 @@
 import { db } from "../lib/firebase";
 import styles from "./page.module.css";
 import { collection, getDocs } from "firebase/firestore";
+import ServicesAnimations from "../components/ServicesAnimations";
 
 export const metadata = {
   title: "Services | Plus Creative Studio",
 };
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
 export default async function Services() {
   const snapshot = await getDocs(collection(db, "services"));
   const services = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
+
   return (
     <>
+      <ServicesAnimations />
+
+      {/* HERO */}
       <section className={styles.hero}>
         <div className={styles.heroRings} aria-hidden="true">
           <div className="ring" />
           <div className="ring" />
           <div className="ring" />
         </div>
-        <p className={styles.eyebrow}>03 — What We Do</p>
-        <h1 className={styles.title}>
+        <p className={`${styles.eyebrow} serv-eyebrow`}>03 — What We Do</p>
+        <h1 className={`${styles.title} serv-title`}>
           Our <em>Services</em>
         </h1>
-        <p className={styles.subtitle}>
+        <p className={`${styles.subtitle} serv-subtitle`}>
           Comprehensive advertising solutions that keep pace with global and
           Egyptian market trends.
         </p>
       </section>
 
-      <section className={styles.grid}>
-        {services.map((s, i) => (
-          <article key={s.num} className={styles.card}>
+      {/* SERVICES GRID */}
+      <section className={`${styles.grid} serv-grid`}>
+        {services.map((s) => (
+          <article key={s.num} className={`${styles.card} serv-card`}>
             <div className={styles.cardTop}>
               <span className={styles.cardNum}>{s.num}</span>
               <span className={styles.cardIcon}>{s.icon}</span>
@@ -52,12 +59,13 @@ export default async function Services() {
         ))}
       </section>
 
+      {/* PROCESS */}
       <section className={styles.process}>
-        <p className="section-label">How We Work</p>
-        <h2 className={styles.processHeading}>
+        <p className="section-label serv-process-label">How We Work</p>
+        <h2 className={`${styles.processHeading} serv-process-heading`}>
           Our <em>Process</em>
         </h2>
-        <div className={styles.processSteps}>
+        <div className={`${styles.processSteps} serv-process-steps`}>
           {[
             {
               step: "01",
@@ -80,7 +88,10 @@ export default async function Services() {
               desc: "We execute with precision across every channel, measuring impact and optimising in real time.",
             },
           ].map((p) => (
-            <div key={p.step} className={styles.processStep}>
+            <div
+              key={p.step}
+              className={`${styles.processStep} serv-process-step`}
+            >
               <span className={styles.processNum}>{p.step}</span>
               <h3 className={styles.processTitle}>{p.title}</h3>
               <p className={styles.processDesc}>{p.desc}</p>

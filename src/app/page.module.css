@@ -329,3 +329,118 @@
     display: none;
   }
 }
+/* ── MARQUEE ── */
+.marqueeWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  /* fade edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.marqueeTrack {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marqueeInner {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: marqueeLeft 30s linear infinite;
+}
+
+.marqueeReverse {
+  animation: marqueeRight 30s linear infinite;
+}
+
+/* pause on hover */
+.marqueeInner:hover {
+  animation-play-state: paused;
+}
+
+.logoCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 140px;
+  height: 100px;
+  background: var(--cream);
+  border: 1px solid rgba(26, 18, 9, 0.07);
+  border-radius: 12px;
+  padding: 16px;
+  flex-shrink: 0;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+  cursor: default;
+}
+
+.logoCard:hover {
+  background: #fff;
+  border-color: var(--orange);
+}
+
+.logoPlaceholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(232, 62, 11, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logoInitial {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--orange);
+  line-height: 1;
+}
+
+.logoName {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(26, 18, 9, 0.5);
+  text-align: center;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+@keyframes marqueeLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqueeRight {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* remove old clientsGrid styles if not used elsewhere */
