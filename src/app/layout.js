@@ -8,9 +8,9 @@ export const metadata = {
   description:
     "Full-service digital agency and creative partner for major brands in Egypt & the Middle East.",
   icons: {
-    icon: "/plus-favicon.png", // standard favicon (tab icon)
-    apple: "/plus-favicon.png", // iOS home screen icon
-    shortcut: "/plus-favicon.png", // legacy browsers
+    icon: "/plus-webicon.webp", // standard favicon (tab icon)
+    apple: "/plus-webicon.webp", // iOS home screen icon
+    shortcut: "/plus-webicon.webp", // legacy browsers
   },
 };
 

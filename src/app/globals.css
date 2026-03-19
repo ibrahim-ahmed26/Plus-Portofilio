@@ -12,6 +12,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   scroll-behavior: smooth;
 }
@@ -21,39 +22,6 @@ body {
   color: var(--dark);
   font-family: "DM Sans", sans-serif;
   overflow-x: hidden;
-  cursor: none;
-}
-
-.cursor {
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.12s ease;
-  mix-blend-mode: difference;
-}
-.cursor-trail {
-  width: 38px;
-  height: 38px;
-  border: 1.5px solid #fff;
-  border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition:
-    left 0.14s ease,
-    top 0.14s ease;
-  mix-blend-mode: difference;
-  opacity: 0.7;
 }
 
 /* Section label */
@@ -187,14 +155,5 @@ body {
   }
   to {
     height: 60px;
-  }
-}
-@media (hover: none) and (pointer: coarse) {
-  body {
-    cursor: auto; /* restore default cursor */
-  }
-  .cursor,
-  .cursor-trail {
-    display: none; /* hide custom cursor elements */
   }
 }
