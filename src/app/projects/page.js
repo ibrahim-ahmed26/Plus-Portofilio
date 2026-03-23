@@ -22,7 +22,10 @@ export default async function Projects() {
     ...doc.data(),
   }));
 
-  const clients = clientsSnap.docs.map((doc) => doc.data().name);
+  const clients = clientsSnap.docs.map((doc) => ({
+    name: doc.data().name,
+    logo: doc.data().logo || null,
+  }));
 
   return (
     <>
@@ -39,7 +42,7 @@ export default async function Projects() {
       {/* Grid */}
       <section className={styles.projectsSection}>
         <div className={`${styles.grid} proj-grid`}>
-          {projects.map((p, i) => (
+          {projects.map((p) => (
             <article
               key={p.id}
               className={`${styles.card} ${p.wide ? styles.wide : ""} proj-card`}

@@ -1,8 +1,8 @@
 "use client";
+import Image from "next/image";
 import styles from "./ClientsMarquee.module.css";
 
 export default function ClientsMarquee({ clients }) {
-  // Split clients into two rows
   const mid = Math.ceil(clients.length / 2);
   const row1 = clients.slice(0, mid);
   const row2 = clients.slice(mid);
@@ -19,11 +19,23 @@ export default function ClientsMarquee({ clients }) {
       {/* Row 1 — scrolls left */}
       <div className={styles.track}>
         <div className={`${styles.rail} ${styles.left}`}>
-          {/* Duplicate for seamless loop */}
-          {[...row1, ...row1, ...row1].map((name, i) => (
+          {[...row1, ...row1, ...row1].map((client, i) => (
             <div key={`r1-${i}`} className={styles.item}>
-              <span className={styles.dot} />
-              <span className={styles.name}>{name}</span>
+              {client.logo ? (
+                <Image
+                  src={client.logo}
+                  alt={client.name}
+                  width={120}
+                  height={40}
+                  className={styles.logo}
+                  unoptimized
+                />
+              ) : (
+                <>
+                  <span className={styles.dot} />
+                  <span className={styles.name}>{client.name}</span>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -32,10 +44,23 @@ export default function ClientsMarquee({ clients }) {
       {/* Row 2 — scrolls right */}
       <div className={styles.track}>
         <div className={`${styles.rail} ${styles.right}`}>
-          {[...row2, ...row2, ...row2].map((name, i) => (
+          {[...row2, ...row2, ...row2].map((client, i) => (
             <div key={`r2-${i}`} className={styles.item}>
-              <span className={styles.dot} />
-              <span className={styles.name}>{name}</span>
+              {client.logo ? (
+                <Image
+                  src={client.logo}
+                  alt={client.name}
+                  width={120}
+                  height={40}
+                  className={styles.logo}
+                  unoptimized
+                />
+              ) : (
+                <>
+                  <span className={styles.dot} />
+                  <span className={styles.name}>{client.name}</span>
+                </>
+              )}
             </div>
           ))}
         </div>

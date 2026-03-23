@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import LogoMarquee from "./components/LogoMarquee";
+import ClientsSection from "./components/ClientsSections";
 !gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Home() {
@@ -219,7 +219,7 @@ export default function Home() {
         >
           Brands We&apos;ve Worked With
         </p>
-        <LogoMarquee />
+        <ClientsSection />
       </section>
     </div>
   );
