@@ -122,11 +122,8 @@
   width: auto;
   max-width: 120px;
   object-fit: contain;
-  opacity: 0.55;
-  filter: grayscale(100%);
-  transition:
-    opacity 0.3s ease,
-    filter 0.3s ease;
+  opacity: 1;
+  filter: grayscale(0%);
 }
 
 .logo:hover {
