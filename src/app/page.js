@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import ClientsSection from "./components/ClientsSections";
+import Image from "next/image";
 !gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Home() {
@@ -14,7 +15,6 @@ export default function Home() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Hero title — chars drift up one by one, silky slow ──
       const split = new SplitText(".hero-title", { type: "lines" });
       gsap.fromTo(
         split.lines,
@@ -120,8 +120,6 @@ export default function Home() {
           },
         },
       );
-
-      // ── Clients — slow diagonal wave ──
       gsap.fromTo(
         ".gsap-client",
         { y: 20, opacity: 0 },
@@ -146,39 +144,23 @@ export default function Home() {
     <div ref={rootRef}>
       {/* ── HERO ── */}
       <section className={styles.hero}>
-        <div className={styles.blob1} />
-        <div className={styles.blob2} />
-        <div className={styles.rings} aria-hidden="true">
-          <div className="ring" />
-          <div className="ring" />
-          <div className="ring" />
-          <div className="ring" />
-          <div className="ring" />
+        <div className={styles.heroBg}>
+          <Image
+            src="/main_cover.png"
+            alt=""
+            fill
+            style={{ objectFit: "cover" }}
+            priority
+          />
         </div>
 
-        <h1 className={`${styles.title} hero-title`}>
-          We Make
-          <em>Brands</em>
-          Unforgettable.
-        </h1>
-
         <div className={styles.bottom}>
-          <p className={`${styles.desc} hero-desc`}>
-            Full-Service Digital Agency · Cairo, Egypt A creative partner for
-            huge commercial brands in the Egyptian &amp; Middle East market —
-            where creativity meets reality.
-          </p>
           <Link href="/services" className={`${styles.btn} hero-btn`}>
             Explore Work <span className={styles.arrow}>→</span>
           </Link>
         </div>
-
-        <div className={`${styles.scrollHint} scroll-hint`} aria-hidden="true">
-          Scroll
-        </div>
       </section>
       <Marquee />
-      {/* ── INTRO ── */}
       <section className={styles.intro}>
         <div className={styles.introGrid}>
           <div>
@@ -210,15 +192,18 @@ export default function Home() {
             ))}
           </div>
         </div>
+        <div className={styles.brandsBanner}>
+          <Image
+            src="/brands.png"
+            alt="Brands We've Worked With"
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        </div>
       </section>
+
       {/* ── CLIENTS ── */}
       <section className={`${styles.clients} gsap-clients`}>
-        <p
-          className="section-label gsap-label"
-          style={{ justifyContent: "center", marginBottom: "48px" }}
-        >
-          Brands We&apos;ve Worked With
-        </p>
         <ClientsSection />
       </section>
     </div>

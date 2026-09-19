@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { db } from "../lib/firebase";
 import styles from "./page.module.css";
 import { collection, getDocs } from "firebase/firestore";
@@ -19,28 +20,32 @@ export default async function Services() {
   return (
     <>
       <ServicesAnimations />
-
-      {/* HERO */}
       <section className={styles.hero}>
-        <div className={styles.heroRings} aria-hidden="true">
-          <div className="ring" />
-          <div className="ring" />
-          <div className="ring" />
+        <div className={styles.heroBg}>
+          <Image
+            src="/our_service.png" // 👈 replace with your real image path
+            alt="Services hero image"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
+          />
         </div>
-        <p className={`${styles.eyebrow} serv-eyebrow`}>03 — What We Do</p>
-        <h1 className={`${styles.title} serv-title`}>
-          Our <em>Services</em>
-        </h1>
-        <p className={`${styles.subtitle} serv-subtitle`}>
-          Comprehensive advertising solutions that keep pace with global and
-          Egyptian market trends.
-        </p>
       </section>
-
-      {/* SERVICES GRID */}
       <section className={`${styles.grid} serv-grid`}>
         {services.map((s) => (
           <article key={s.num} className={`${styles.card} serv-card`}>
+            {s.image && (
+              <div className={styles.cardImageWrap}>
+                <Image
+                  src={s.image}
+                  alt={s.name}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+                <div className={styles.cardImageOverlay} />
+              </div>
+            )}
+
             <div className={styles.cardTop}>
               <span className={styles.cardNum}>{s.num}</span>
               <span className={styles.cardIcon}>{s.icon}</span>
@@ -59,7 +64,6 @@ export default async function Services() {
         ))}
       </section>
 
-      {/* PROCESS */}
       <section className={styles.process}>
         <p className="section-label serv-process-label">How We Work</p>
         <h2 className={`${styles.processHeading} serv-process-heading`}>

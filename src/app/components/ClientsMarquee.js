@@ -9,9 +9,6 @@ export default function ClientsMarquee({ clients }) {
 
   return (
     <section className={styles.section}>
-      <p className="section-label" style={{ paddingLeft: "60px" }}>
-        Clients We&apos;ve Served
-      </p>
       <h2 className={styles.heading}>
         Some of Our <em>Partners</em>
       </h2>

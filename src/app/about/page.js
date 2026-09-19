@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./page.module.css";
 import AboutAnimations from "../components/AboutAnimations";
 
@@ -35,15 +36,17 @@ export default function About() {
 
       {/* HERO */}
       <section className={styles.hero}>
-        <div className={styles.heroRings} aria-hidden="true">
-          <div className="ring" />
-          <div className="ring" />
-          <div className="ring" />
+        <div className={styles.heroBg}>
+          <Image
+            src="/who_we_are.png"
+            alt=""
+            fill
+            quality={90}
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
+            priority
+          />
         </div>
-        <p className={`${styles.eyebrow} about-eyebrow`}>02 — Who We Are</p>
-        <h1 className={`${styles.title} about-title`}>
-          We Are <em>Plus</em>
-        </h1>
       </section>
 
       {/* STORY */}
@@ -75,13 +78,16 @@ export default function About() {
 
       {/* VISION */}
       <section className={styles.vision}>
-        <div className={styles.visionInner}>
-          <p className="section-label light">Our Vision</p>
-          <blockquote className={`${styles.visionQuote} about-vision`}>
-            To be the creative partner for startups and established brands alike
-            — developing their presence, building their identity, and combining{" "}
-            <em>creativity with reality</em> in a way that shows the difference.
-          </blockquote>
+        <div className={styles.visionBg}>
+          <Image
+            src="/our_vision.png"
+            alt="Our Vision"
+            fill
+            quality={90}
+            size="(max-width: 768px) 100vw, 50vw"
+            priority
+            style={{ objectFit: "cover" }}
+          />
         </div>
       </section>
 

@@ -1,3 +1,5 @@
+"use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Footer.module.css";
@@ -42,19 +44,48 @@ const socials = [
   },
 ];
 
+// ── Rotating CTA background images ──
+const ctaBgImages = [
+  "/Artboard.png",
+  "/Artboard2.png",
+  "/Artboard3.png",
+  "/Artboard4.png",
+];
+
 export default function Footer() {
   const year = new Date().getFullYear();
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % ctaBgImages.length);
+    }, 60000); // 60 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <footer className={styles.footer}>
       {/* ── TOP CTA BAND ── */}
       <div className={styles.ctaBand}>
-        <div className={styles.ctaLeft}>
-          <p className={styles.ctaEyebrow}>Ready to start?</p>
-          <h2 className={styles.ctaHeading}>
-            Let&apos;s build something <em>great.</em>
-          </h2>
+        <div className={styles.ctaBg}>
+          {ctaBgImages.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt="brands Images"
+              fill
+              style={{ objectFit: "cover" }}
+              priority={i === 0}
+              className={`${styles.ctaBgImg} ${
+                i === bgIndex ? styles.ctaBgImgActive : ""
+              }`}
+            />
+          ))}
+          <div className={styles.ctaOverlay} />
         </div>
+
+        <div className={styles.ctaLeft}></div>
         <Link href="/contact" className={styles.ctaBtn}>
           Start a Project →
         </Link>
