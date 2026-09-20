@@ -1,40 +1,32 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import styles from "./page.module.css";
-import AboutAnimations from "../components/AboutAnimations";
+import AboutAnimations from "../../components/AboutAnimations";
 
 export const metadata = {
   title: "About Us | Plus Creative Studio",
 };
 
-const values = [
-  {
-    icon: "✦",
-    title: "Creativity First",
-    desc: "Every brief is a blank canvas. We push past the obvious to find ideas that are genuinely surprising.",
-  },
-  {
-    icon: "◈",
-    title: "Reality in Execution",
-    desc: "Great ideas only matter when they work. We obsess over craft, detail, and flawless delivery.",
-  },
-  {
-    icon: "◉",
-    title: "Rooted in Culture",
-    desc: "We understand the Egyptian and Arab market deeply — the nuance, the humor, and the emotional pulse.",
-  },
-  {
-    icon: "▲",
-    title: "Partnership Mindset",
-    desc: "We work as an extension of your team, not just a vendor. Your growth is our growth.",
-  },
-];
+export default async function About() {
+  const t = await getTranslations("about");
 
-export default function About() {
+  const values = [
+    { icon: "✦", title: t("value1Title"), desc: t("value1Desc") },
+    { icon: "◈", title: t("value2Title"), desc: t("value2Desc") },
+    { icon: "◉", title: t("value3Title"), desc: t("value3Desc") },
+    { icon: "▲", title: t("value4Title"), desc: t("value4Desc") },
+  ];
+
+  const stats = [
+    { num: t("stat1Num"), label: t("stat1Label") },
+    { num: t("stat2Num"), label: t("stat2Label") },
+    { num: t("stat3Num"), label: t("stat3Label") },
+    { num: t("stat4Num"), label: t("stat4Label") },
+  ];
+
   return (
     <>
       <AboutAnimations />
-
-      {/* HERO */}
       <section className={styles.hero}>
         <div className={styles.heroBg}>
           <Image
@@ -48,35 +40,25 @@ export default function About() {
           />
         </div>
       </section>
-
-      {/* STORY */}
       <section className={styles.story}>
         <div className={styles.storyGrid}>
           <div>
-            <p className="section-label about-story-label">Our Story</p>
+            <p className="section-label about-story-label">{t("storyLabel")}</p>
             <h2 className={`${styles.storyHeading} about-story-heading`}>
-              Built on the belief that <em>creativity and reality</em>{" "}
-              aren&apos;t opposites.
+              {t("storyHeading")} <em>{t("storyHeadingEm")}</em>{" "}
+              {t("storyHeadingEnd")}
             </h2>
           </div>
           <div>
             <p className={`${styles.storyText} about-story-text`}>
-              Plus Creative Studio was born from a simple but powerful idea:
-              that the best creative work doesn&apos;t just look stunning — it
-              works. We are a full-service digital agency and creative partner
-              for major commercial brands in the Egyptian market.
+              {t("storyText1")}
             </p>
             <p className={`${styles.storyText} about-story-text`}>
-              Our team combines diverse experiences, creative ambition, and a
-              deep understanding of the Egyptian and Middle Eastern market. From
-              Pepsi to Gatorade, from real estate to football — we&apos;ve built
-              campaigns that move markets and minds.
+              {t("storyText2")}
             </p>
           </div>
         </div>
       </section>
-
-      {/* VISION */}
       <section className={styles.vision}>
         <div className={styles.visionBg}>
           <Image
@@ -90,12 +72,10 @@ export default function About() {
           />
         </div>
       </section>
-
-      {/* VALUES */}
       <section className={styles.values}>
-        <p className="section-label">What We Stand For</p>
+        <p className="section-label">{t("valuesLabel")}</p>
         <h2 className={styles.valuesHeading}>
-          Our <em>Values</em>
+          {t("valuesHeading")} <em>{t("valuesHeadingEm")}</em>
         </h2>
         <div className={`${styles.valuesGrid} about-values-grid`}>
           {values.map((v, i) => (
@@ -107,15 +87,8 @@ export default function About() {
           ))}
         </div>
       </section>
-
-      {/* STATS */}
       <section className={`${styles.stats} about-stats`}>
-        {[
-          { num: "10+", label: "Years in the market" },
-          { num: "50+", label: "Brands partnered" },
-          { num: "100+", label: "Campaigns launched" },
-          { num: "4", label: "Countries reached" },
-        ].map((s) => (
+        {stats.map((s) => (
           <div key={s.label} className={`${styles.statItem} about-stat`}>
             <span className={styles.statNum}>{s.num}</span>
             <span className={styles.statLabel}>{s.label}</span>

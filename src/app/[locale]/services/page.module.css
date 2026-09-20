@@ -1,6 +1,5 @@
-/* ── HERO ── */
 .hero {
-  min-height: 55vh;
+  min-height: 80vh;
   background: var(--dark);
   position: relative;
   display: flex;

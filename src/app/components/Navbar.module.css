@@ -442,3 +442,49 @@
     display: flex;
   }
 }
+.langSwitch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.langBtn {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 4px 2px;
+  transition: opacity 0.2s;
+}
+.langBtn:hover {
+  opacity: 0.8;
+}
+
+.langActive {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: inherit;
+  opacity: 1;
+  cursor: default;
+  padding: 4px 2px;
+}
+
+.langDivider {
+  opacity: 0.3;
+  font-size: 11px;
+}
+
+.panelLangSwitch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+}

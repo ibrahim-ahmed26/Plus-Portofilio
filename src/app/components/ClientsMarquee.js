@@ -1,8 +1,11 @@
 "use client";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import styles from "./ClientsMarquee.module.css";
 
 export default function ClientsMarquee({ clients }) {
+  const t = useTranslations("projects");
+
   const mid = Math.ceil(clients.length / 2);
   const row1 = clients.slice(0, mid);
   const row2 = clients.slice(mid);
@@ -10,7 +13,7 @@ export default function ClientsMarquee({ clients }) {
   return (
     <section className={styles.section}>
       <h2 className={styles.heading}>
-        Some of Our <em>Partners</em>
+        {t("partnersHeading")} <em>{t("partnersHeadingEm")}</em>
       </h2>
 
       {/* Row 1 — scrolls left */}

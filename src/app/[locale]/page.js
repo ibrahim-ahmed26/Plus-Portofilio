@@ -1,17 +1,19 @@
 "use client";
 import { useEffect, useRef } from "react";
-import Link from "next/link";
-import Marquee from "../app/components/Marquee";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import Marquee from "../components/Marquee";
 import styles from "./page.module.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import ClientsSection from "./components/ClientsSections";
+import ClientsSection from "../components/ClientsSections";
 import Image from "next/image";
 !gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Home() {
   const rootRef = useRef(null);
+  const t = useTranslations("home");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -29,21 +31,18 @@ export default function Home() {
         },
       );
 
-      // ── Hero desc — slow fade up ──
       gsap.fromTo(
         ".hero-desc",
         { y: 24, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.4, ease: "power3.out", delay: 0.9 },
       );
 
-      // ── Hero button — elegant fade ──
       gsap.fromTo(
         ".hero-btn",
         { y: 16, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", delay: 1.1 },
       );
 
-      // ── Scroll hint — soft breathe loop ──
       gsap.fromTo(
         ".scroll-hint",
         { opacity: 0 },
@@ -57,7 +56,6 @@ export default function Home() {
         },
       );
 
-      // ── Section label line — grows in ──
       gsap.utils.toArray(".gsap-label").forEach((el) => {
         gsap.fromTo(
           el,
@@ -72,7 +70,6 @@ export default function Home() {
         );
       });
 
-      // ── Headings — lines reveal upward ──
       gsap.utils.toArray(".gsap-heading").forEach((el) => {
         const s = new SplitText(el, { type: "lines" });
         gsap.fromTo(
@@ -89,7 +86,6 @@ export default function Home() {
         );
       });
 
-      // ── Text paragraphs — gentle fade ──
       gsap.utils.toArray(".gsap-text").forEach((el) => {
         gsap.fromTo(
           el,
@@ -104,7 +100,6 @@ export default function Home() {
         );
       });
 
-      // ── Stats — stagger up on scroll ──
       gsap.fromTo(
         ".gsap-stat",
         { y: 30, opacity: 0 },
@@ -140,14 +135,20 @@ export default function Home() {
     return () => ctx.revert();
   }, []);
 
+  const stats = [
+    { num: t("stat1Num"), label: t("stat1Label") },
+    { num: t("stat2Num"), label: t("stat2Label") },
+    { num: t("stat3Num"), label: t("stat3Label") },
+    { num: t("stat4Num"), label: t("stat4Label") },
+  ];
+
   return (
     <div ref={rootRef}>
-      {/* ── HERO ── */}
       <section className={styles.hero}>
         <div className={styles.heroBg}>
           <Image
             src="/main_cover.png"
-            alt=""
+            alt="Main Cover"
             fill
             style={{ objectFit: "cover" }}
             priority
@@ -156,7 +157,7 @@ export default function Home() {
 
         <div className={styles.bottom}>
           <Link href="/services" className={`${styles.btn} hero-btn`}>
-            Explore Work <span className={styles.arrow}>→</span>
+            {t("heroBtn")} <span className={styles.arrow}>→</span>
           </Link>
         </div>
       </section>
@@ -164,27 +165,20 @@ export default function Home() {
       <section className={styles.intro}>
         <div className={styles.introGrid}>
           <div>
-            <p className="section-label gsap-label">Who We Are</p>
+            <p className="section-label gsap-label">{t("introLabel")}</p>
             <h2 className={`${styles.introHeading} gsap-heading`}>
-              Creativity meets <em>Reality</em>
+              {t("introHeading")} <em>{t("introHeadingEm")}</em>
             </h2>
             <p className={`${styles.introText} gsap-text`}>
-              Plus is a full-service digital agency and creative partner for
-              major commercial brands in Egypt. We deliver integrated digital
-              marketing for companies of all sizes.
+              {t("introText")}
             </p>
             <Link href="/about" className={`${styles.outlineBtn} gsap-text`}>
-              Learn More →
+              {t("learnMore")} →
             </Link>
           </div>
 
           <div className={styles.statGrid}>
-            {[
-              { num: "10+", label: "Years Experience" },
-              { num: "50+", label: "Brands Served" },
-              { num: "100+", label: "Campaigns" },
-              { num: "4", label: "Countries" },
-            ].map((s) => (
+            {stats.map((s) => (
               <div key={s.label} className={`${styles.stat} gsap-stat`}>
                 <span className={styles.statNum}>{s.num}</span>
                 <span className={styles.statLabel}>{s.label}</span>
