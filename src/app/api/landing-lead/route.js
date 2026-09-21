@@ -2,48 +2,53 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 
 function sha256(value) {
-  return crypto
-    .createHash("sha256")
-    .update(value.trim().toLowerCase())
-    .digest("hex");
+  return crypto.createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
 }
 
 export async function POST(req) {
   const body = await req.json();
   const { name, email, phone, message } = body;
 
+  console.log("PIXEL_ID:", process.env.NEXT_PUBLIC_FB_PIXEL_ID);
+  console.log("TOKEN present:", !!process.env.FB_CONVERSIONS_ACCESS_TOKEN);
+
   // 1. Send server-side Lead event to Meta Conversions API
   try {
-    await fetch(
+    const payload = {
+      data: [
+        {
+          event_name: "Lead",
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: "website",
+          user_data: {
+            em: [sha256(email)],
+            ph: phone ? [sha256(phone.replace(/\D/g, ""))] : undefined,
+          },
+        },
+      ],
+    };
+
+    if (process.env.META_TEST_EVENT_CODE) {
+      payload.test_event_code = process.env.META_TEST_EVENT_CODE;
+    }
+
+    const metaRes = await fetch(
       `https://graph.facebook.com/v19.0/${process.env.NEXT_PUBLIC_FB_PIXEL_ID}/events?access_token=${process.env.FB_CONVERSIONS_ACCESS_TOKEN}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: [
-            {
-              event_name: "Lead",
-              event_time: Math.floor(Date.now() / 1000),
-              action_source: "website",
-              user_data: {
-                em: [sha256(email)],
-                ph: phone ? [sha256(phone.replace(/\D/g, ""))] : undefined,
-              },
-            },
-          ],
-        }),
+        body: JSON.stringify(payload),
       },
     );
+
+    const metaJson = await metaRes.json();
+    console.log("Meta Conversions API response:", metaJson);
   } catch (err) {
     console.error("Meta Conversions API error:", err);
   }
 
   // 2. Email the owner — only if credentials are configured
-  if (
-    process.env.EMAIL_USER &&
-    process.env.EMAIL_APP_PASSWORD &&
-    process.env.EMAIL_TO
-  ) {
+  if (process.env.EMAIL_USER && process.env.EMAIL_APP_PASSWORD && process.env.EMAIL_TO) {
     try {
       const nodemailer = (await import("nodemailer")).default;
       const transporter = nodemailer.createTransport({
@@ -62,12 +67,9 @@ export async function POST(req) {
       });
     } catch (err) {
       console.error("Email send error:", err);
-      // don't fail the whole request just because email didn't send
     }
   } else {
-    console.log(
-      "Email not configured yet — skipping notification email. Lead saved to Firestore.",
-    );
+    console.log("Email not configured yet — skipping notification email. Lead saved to Firestore.");
   }
 
   return NextResponse.json({ success: true });
