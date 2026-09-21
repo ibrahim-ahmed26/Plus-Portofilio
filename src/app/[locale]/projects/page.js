@@ -1,8 +1,9 @@
 import { collection, getDocs } from "firebase/firestore";
+import { getTranslations } from "next-intl/server";
 import styles from "./page.module.css";
-import { db } from "../lib/firebase";
-import ClientsMarquee from "../components/ClientsMarquee";
-import ProjectsAnimations from "../components/ProjectAnimations";
+import { db } from "../../lib/firebase";
+import ClientsMarquee from "../../components/ClientsMarquee";
+import ProjectsAnimations from "../../components/ProjectAnimations";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -12,6 +13,8 @@ export const metadata = {
 };
 
 export default async function Projects() {
+  const t = await getTranslations("projects");
+
   const [projectsSnap, clientsSnap] = await Promise.all([
     getDocs(collection(db, "projects")),
     getDocs(collection(db, "clients")),
@@ -33,9 +36,9 @@ export default async function Projects() {
 
       {/* Hero */}
       <section className={styles.hero}>
-        <p className={`${styles.eyebrow} proj-eyebrow`}>04 — Our Work</p>
+        <p className={`${styles.eyebrow} proj-eyebrow`}>{t("heroEyebrow")}</p>
         <h1 className={`${styles.title} proj-title`}>
-          Featured <em>Projects</em>
+          {t("heroTitle")} <em>{t("heroTitleEm")}</em>
         </h1>
       </section>
 

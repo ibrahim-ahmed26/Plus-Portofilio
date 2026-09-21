@@ -1,11 +1,11 @@
 /* PAGE HERO */
 .hero {
-  min-height: 55vh;
+  min-height: 80vh;
   background: var(--orange);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 60px 80px;
+  padding: 140px 60px 80px;
   position: relative;
   overflow: hidden;
 }
@@ -73,11 +73,21 @@
 
 /* VISION */
 .vision {
-  background: var(--dark);
+  position: relative;
   padding: 100px 60px;
+  width: 100%;
+  height: 420px;
+}
+
+.visionBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .visionInner {
+  position: relative;
+  z-index: 1;
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
@@ -90,6 +100,7 @@
   color: var(--cream);
   line-height: 1.5;
   font-weight: 400;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 .visionQuote em {
   color: var(--orange);

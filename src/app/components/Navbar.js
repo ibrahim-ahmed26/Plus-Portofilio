@@ -1,30 +1,39 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { useEffect, useState , useRef} from "react";
 import styles from "./Navbar.module.css";
-
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Projects" },
-];
 
 const DARK_HERO_PAGES = new Set(["/", "/about", "/services", "/contact"]);
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("nav");
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const links = [
+    { href: "/", label: t("home") },
+    { href: "/about", label: t("about") },
+    { href: "/services", label: t("services") },
+    { href: "/projects", label: t("projects") },
+  ];
+
   const heroDark = DARK_HERO_PAGES.has(pathname);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
+  const prevPathname = useRef(pathname);
 
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMenuOpen(false);
+      prevPathname.current = pathname;
+    }
+  }, [pathname]);
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -37,6 +46,10 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  function switchLocale(newLocale) {
+    router.replace(pathname, { locale: newLocale });
+  }
 
   const theme = menuOpen
     ? "menu-open"
@@ -80,8 +93,23 @@ export default function Navbar() {
           ))}
           <li>
             <Link href="/contact" className={styles.ctaBtn}>
-              Connect
+              {t("connect")}
             </Link>
+          </li>
+          <li className={styles.langSwitch}>
+            <button
+              className={locale === "en" ? styles.langActive : styles.langBtn}
+              onClick={() => switchLocale("en")}
+            >
+              EN
+            </button>
+            <span className={styles.langDivider}>/</span>
+            <button
+              className={locale === "it" ? styles.langActive : styles.langBtn}
+              onClick={() => switchLocale("it")}
+            >
+              IT
+            </button>
           </li>
         </ul>
 
@@ -124,9 +152,26 @@ export default function Navbar() {
               }}
               onClick={() => setMenuOpen(false)}
             >
-              Connect →
+              {t("connect")} →
             </Link>
           </div>
+
+          <div className={styles.panelLangSwitch}>
+            <button
+              className={locale === "en" ? styles.langActive : styles.langBtn}
+              onClick={() => switchLocale("en")}
+            >
+              EN
+            </button>
+            <span className={styles.langDivider}>/</span>
+            <button
+              className={locale === "it" ? styles.langActive : styles.langBtn}
+              onClick={() => switchLocale("it")}
+            >
+              IT
+            </button>
+          </div>
+
           <div className={styles.panelFooter}>
             <span>Plus Creative Studio</span>
             <span>Cairo, Egypt · 01118887031</span>

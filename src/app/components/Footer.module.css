@@ -5,12 +5,42 @@
 
 /* ── CTA BAND ── */
 .ctaBand {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   background: var(--orange);
-  padding: 80px 60px;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 60px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 40px;
+  min-height: 280px;
+}
+
+.ctaBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.ctaBgImg {
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.ctaBgImgActive {
+  opacity: 1;
+}
+
+.ctaOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.25));
 }
 
 .ctaEyebrow {
@@ -32,7 +62,14 @@
   font-style: italic;
 }
 
+.ctaLeft {
+  position: relative;
+  z-index: 2;
+}
+
 .ctaBtn {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -66,16 +103,10 @@
   padding: 80px 60px;
   border-bottom: 1px solid rgba(245, 240, 220, 0.07);
 }
-
-/* Brand column */
-.brand {
-}
-
 /* ── LOGO IMAGE ── */
 .logo {
   display: inline-block;
   margin-bottom: 20px;
-  /* remove old text styles */
   font-size: unset;
   font-family: unset;
   font-weight: unset;
@@ -88,7 +119,6 @@
   position: relative;
   width: 130px;
   height: 44px;
-  /* dark background → screen strips black, red logo glows */
   mix-blend-mode: screen;
   filter: drop-shadow(0 0 10px rgba(232, 62, 11, 0.35));
   transition: filter 0.3s ease;
@@ -218,8 +248,33 @@
   .ctaBand {
     flex-direction: column;
     align-items: flex-start;
-    padding: 52px 24px;
+    justify-content: flex-start;
+    padding: 40px 24px 32px;
+    min-height: 380px;
+    gap: 0;
   }
+
+  .ctaLeft {
+    width: 100%;
+  }
+
+  .ctaHeading {
+    font-size: clamp(28px, 8vw, 38px);
+  }
+
+  .ctaBtn {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  .ctaOverlay {
+    background: linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.4)
+    );
+  }
+
   .main {
     grid-template-columns: 1fr 1fr;
     padding: 52px 24px;

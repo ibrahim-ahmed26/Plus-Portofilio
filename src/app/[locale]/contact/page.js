@@ -1,22 +1,32 @@
 "use client";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./page.module.css";
 import { collection, addDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
-import { db } from "../lib/firebase";
-
-const services = [
-  "Design & Branding",
-  "Digital Marketing",
-  "Social Media Management",
-  "Event Management",
-  "Media Production",
-  "UI & UX Design",
-  "Influencer Campaigns",
-  "Other",
-];
+import { db } from "../../lib/firebase";
 
 export default function Contact() {
+  const t = useTranslations("contact");
+
+  const services = [
+    t("service1"),
+    t("service2"),
+    t("service3"),
+    t("service4"),
+    t("service5"),
+    t("service6"),
+    t("service7"),
+    t("service8"),
+  ];
+
+  const socials = [
+    { label: "Instagram", handle: "@plus.creativestudio" },
+    { label: "Facebook", handle: "plus.creativestudio" },
+    { label: "TikTok", handle: "@plus.eg" },
+    { label: "LinkedIn", handle: "plus-creativestudio" },
+  ];
+
   const [form, setForm] = useState({
     name: "",
     company: "",
@@ -40,7 +50,7 @@ export default function Contact() {
       });
 
       setStatus("success");
-      toast.success("Message sent! We'll be in touch soon");
+      toast.success(t("toastSuccess"));
       setTimeout(() => setStatus("idle"), 3000);
       setForm({
         name: "",
@@ -53,7 +63,7 @@ export default function Contact() {
     } catch (err) {
       console.error(err);
       setStatus("error");
-      toast.error("Something went wrong. Please try again.");
+      toast.error(t("toastError"));
     }
   };
 
@@ -61,11 +71,11 @@ export default function Contact() {
     <>
       {/* HERO */}
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>05 — Get In Touch</p>
+        <p className={styles.eyebrow}>{t("heroEyebrow")}</p>
         <h1 className={styles.title}>
-          Let&apos;s Build
+          {t("heroTitleLine1")}
           <br />
-          <em>Something Great.</em>
+          <em>{t("heroTitleLine2")}</em>
         </h1>
       </section>
 
@@ -73,43 +83,34 @@ export default function Contact() {
       <section className={styles.main}>
         {/* LEFT */}
         <div className={styles.info}>
-          <p className={styles.infoIntro}>
-            Whether you&apos;re a startup building your brand from scratch, or
-            an established company looking to grow your digital presence —
-            we&apos;re the creative partner you need.
-          </p>
+          <p className={styles.infoIntro}>{t("infoIntro")}</p>
 
           <div className={styles.infoItems}>
             <div className={styles.infoItem}>
               <span className={styles.infoIcon}>📞</span>
               <div>
-                <strong>Phone</strong>
+                <strong>{t("phoneLabel")}</strong>
                 <span>01118887031</span>
               </div>
             </div>
             <div className={styles.infoItem}>
               <span className={styles.infoIcon}>✉</span>
               <div>
-                <strong>Email</strong>
+                <strong>{t("emailLabel")}</strong>
                 <span>INFO.PLUSCREATIVESTUDIO@gmail.com</span>
               </div>
             </div>
             <div className={styles.infoItem}>
               <span className={styles.infoIcon}>📍</span>
               <div>
-                <strong>Location</strong>
+                <strong>{t("locationLabel")}</strong>
                 <span>Cairo, Egypt</span>
               </div>
             </div>
           </div>
 
           <div className={styles.socials}>
-            {[
-              { label: "Instagram", handle: "@plus.creativestudio" },
-              { label: "Facebook", handle: "plus.creativestudio" },
-              { label: "TikTok", handle: "@plus.eg" },
-              { label: "LinkedIn", handle: "plus-creativestudio" },
-            ].map((s) => (
+            {socials.map((s) => (
               <div key={s.label} className={styles.socialItem}>
                 <span className={styles.socialLabel}>{s.label}</span>
                 <span className={styles.socialHandle}>{s.handle}</span>
@@ -122,7 +123,7 @@ export default function Contact() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.row}>
             <div className={styles.group}>
-              <label className={styles.label}>Your Name *</label>
+              <label className={styles.label}>{t("nameLabel")}</label>
               <input
                 required
                 className={styles.input}
@@ -132,10 +133,10 @@ export default function Contact() {
               />
             </div>
             <div className={styles.group}>
-              <label className={styles.label}>Company</label>
+              <label className={styles.label}>{t("companyLabel")}</label>
               <input
                 className={styles.input}
-                placeholder="Your Brand"
+                placeholder={t("companyPlaceholder")}
                 value={form.company}
                 onChange={update("company")}
               />
@@ -144,7 +145,7 @@ export default function Contact() {
 
           <div className={styles.row}>
             <div className={styles.group}>
-              <label className={styles.label}>Email Address *</label>
+              <label className={styles.label}>{t("emailFieldLabel")}</label>
               <input
                 required
                 type="email"
@@ -155,7 +156,7 @@ export default function Contact() {
               />
             </div>
             <div className={styles.group}>
-              <label className={styles.label}>Phone Number</label>
+              <label className={styles.label}>{t("phoneFieldLabel")}</label>
               <input
                 className={styles.input}
                 placeholder="+20 10 ..."
@@ -166,13 +167,13 @@ export default function Contact() {
           </div>
 
           <div className={styles.group}>
-            <label className={styles.label}>Service You Need</label>
+            <label className={styles.label}>{t("serviceLabel")}</label>
             <select
               className={styles.select}
               value={form.service}
               onChange={update("service")}
             >
-              <option value="">Select a service...</option>
+              <option value="">{t("servicePlaceholder")}</option>
               {services.map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -182,11 +183,11 @@ export default function Contact() {
           </div>
 
           <div className={styles.group}>
-            <label className={styles.label}>Your Message *</label>
+            <label className={styles.label}>{t("messageLabel")}</label>
             <textarea
               required
               className={styles.textarea}
-              placeholder="Tell us about your project, goals, and timeline..."
+              placeholder={t("messagePlaceholder")}
               value={form.message}
               onChange={update("message")}
             />
@@ -197,16 +198,14 @@ export default function Contact() {
             className={styles.submit}
             disabled={status === "loading" || status === "success"}
           >
-            {status === "loading" && "Sending..."}
-            {status === "success" && "✓ Message Sent!"}
-            {status === "error" && "Error — Try Again"}
-            {status === "idle" && "Send Message →"}
+            {status === "loading" && t("btnSending")}
+            {status === "success" && t("btnSuccess")}
+            {status === "error" && t("btnError")}
+            {status === "idle" && t("btnIdle")}
           </button>
 
           {status === "error" && (
-            <p className={styles.errorMsg}>
-              Something went wrong. Please try again or email us directly.
-            </p>
+            <p className={styles.errorMsg}>{t("errorMsg")}</p>
           )}
         </form>
       </section>

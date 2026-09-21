@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { db } from "@/app/lib/firebase";
 import {
   collection,
@@ -10,13 +11,18 @@ import {
   doc,
 } from "firebase/firestore";
 
-const empty = { name: "", icon: "", num: "", desc: "", tags: "" };
+const CLOUDINARY_CLOUD_NAME = "dajt9uo0p"; // 👈 same as clients — replace if different
+const CLOUDINARY_UPLOAD_PRESET = "logosBrand"; // 👈 replace if you use a different preset for services
+
+const empty = { name: "", icon: "", num: "", desc: "", tags: "", image: "" };
 
 export default function AdminServices() {
   const [services, setServices] = useState([]);
   const [form, setForm] = useState(empty);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
   async function loadServices() {
     const snap = await getDocs(collection(db, "services"));
@@ -26,9 +32,42 @@ export default function AdminServices() {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadServices();
   }, []);
+
+  async function handleImageChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Local preview instantly
+    setImagePreview(URL.createObjectURL(file));
+
+    // Upload to Cloudinary
+    setUploading(true);
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+      data.append("folder", "services/images");
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: "POST", body: data },
+      );
+
+      if (!res.ok) throw new Error("Upload failed");
+
+      const json = await res.json();
+      setForm((prev) => ({ ...prev, image: json.secure_url }));
+      setImagePreview(json.secure_url);
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      alert("Image upload failed. Please try again.");
+      setImagePreview(null);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -43,6 +82,7 @@ export default function AdminServices() {
       await addDoc(collection(db, "services"), data);
     }
     setForm(empty);
+    setImagePreview(null);
     await loadServices();
   }
 
@@ -60,8 +100,16 @@ export default function AdminServices() {
       num: service.num,
       desc: service.desc,
       tags: service.tags.join(", "),
+      image: service.image || "",
     });
+    setImagePreview(service.image || null);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setForm(empty);
+    setImagePreview(null);
   }
 
   return (
@@ -116,6 +164,103 @@ export default function AdminServices() {
           transition: border-color 0.2s;
         }
         .sv-textarea:focus { border-color: #e83e0b; }
+
+        /* ── Image upload row ── */
+        .sv-image-row {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        .sv-upload-label {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+        }
+        .sv-upload-text {
+          font-size: 13px;
+          color: #64748b;
+        }
+        .sv-upload-btn {
+          background: #f1f5f9;
+          color: #334155;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 7px 14px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+        .sv-upload-btn-disabled {
+          background: #f1f5f9;
+          color: #94a3b8;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 7px 14px;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: not-allowed;
+          white-space: nowrap;
+        }
+        .sv-uploading-badge {
+          font-size: 12px;
+          color: #e83e0b;
+          font-weight: 600;
+        }
+        .sv-preview-wrap {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          background: #f8fafc;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 6px 10px;
+        }
+        .sv-remove-image {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background: #e11d48;
+          color: #fff;
+          border: none;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          font-size: 10px;
+          font-weight: 700;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 1;
+        }
+
+        /* ── Thumbnails in table/cards ── */
+        .sv-image-thumb {
+          width: 56px;
+          height: 56px;
+          border-radius: 8px;
+          object-fit: cover;
+          border: 1.5px solid #e2e8f0;
+          background: #f8f7f4;
+          flex-shrink: 0;
+        }
+        .sv-image-thumb-placeholder {
+          width: 56px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1.5px dashed #e2e8f0;
+          background: #f8f7f4;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          color: #94a3b8;
+          text-align: center;
+        }
+
         .sv-form-buttons { display: flex; gap: 10px; }
         .sv-btn-primary {
           background: #e83e0b;
@@ -127,6 +272,10 @@ export default function AdminServices() {
           font-size: 14px;
           cursor: pointer;
           flex: 1;
+        }
+        .sv-btn-primary:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
         .sv-btn-cancel {
           background: #f1f5f9;
@@ -150,14 +299,14 @@ export default function AdminServices() {
           background: #fff;
           border-radius: 16px;
           overflow: hidden;
-          min-width: 860px;
+          min-width: 940px;
           width: 100%;
         }
 
         /* ── Table head ── */
         .sv-thead {
           display: grid;
-          grid-template-columns: 50px 40px 160px 1fr 160px 150px;
+          grid-template-columns: 50px 40px 64px 150px 1fr 150px 150px;
           gap: 12px;
           padding: 12px 20px;
           background: #f8f7f4;
@@ -173,7 +322,7 @@ export default function AdminServices() {
         /* ── Table row ── */
         .sv-trow {
           display: grid;
-          grid-template-columns: 50px 40px 160px 1fr 160px 150px;
+          grid-template-columns: 50px 40px 64px 150px 1fr 150px 150px;
           gap: 12px;
           padding: 16px 20px;
           border-bottom: 1px solid #f8f7f4;
@@ -339,18 +488,75 @@ export default function AdminServices() {
             onChange={(e) => setForm({ ...form, tags: e.target.value })}
           />
 
+          {/* Image upload row */}
+          <div className="sv-image-row">
+            <label className="sv-upload-label">
+              <span className="sv-upload-text">
+                {uploading ? "Uploading image…" : "Upload Image (optional)"}
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+                disabled={uploading}
+              />
+              <span
+                className={
+                  uploading ? "sv-upload-btn-disabled" : "sv-upload-btn"
+                }
+              >
+                {imagePreview ? "Change Image" : "Choose File"}
+              </span>
+            </label>
+
+            {/* Preview */}
+            {imagePreview && !uploading && (
+              <div className="sv-preview-wrap">
+                <Image
+                  src={imagePreview}
+                  alt="Image preview"
+                  width={80}
+                  height={56}
+                  style={{ objectFit: "cover", borderRadius: 6 }}
+                  unoptimized={imagePreview.startsWith("blob:")}
+                />
+                <button
+                  type="button"
+                  className="sv-remove-image"
+                  onClick={() => {
+                    setImagePreview(null);
+                    setForm((prev) => ({ ...prev, image: "" }));
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            {/* Upload progress indicator */}
+            {uploading && (
+              <span className="sv-uploading-badge">⏳ Uploading…</span>
+            )}
+          </div>
+
           <div className="sv-form-buttons">
-            <button type="submit" className="sv-btn-primary">
-              {editingId ? "Update Service" : "Add Service"}
+            <button
+              type="submit"
+              className="sv-btn-primary"
+              disabled={uploading}
+            >
+              {uploading
+                ? "Uploading…"
+                : editingId
+                  ? "Update Service"
+                  : "Add Service"}
             </button>
             {editingId && (
               <button
                 type="button"
                 className="sv-btn-cancel"
-                onClick={() => {
-                  setEditingId(null);
-                  setForm(empty);
-                }}
+                onClick={cancelEdit}
               >
                 Cancel
               </button>
@@ -370,6 +576,7 @@ export default function AdminServices() {
                 <div className="sv-thead">
                   <span>#</span>
                   <span>Icon</span>
+                  <span>Image</span>
                   <span>Name</span>
                   <span>Description</span>
                   <span>Tags</span>
@@ -379,6 +586,18 @@ export default function AdminServices() {
                   <div key={service.id} className="sv-trow">
                     <span className="sv-num">{service.num}</span>
                     <span className="sv-icon">{service.icon}</span>
+                    <span>
+                      {service.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={service.image}
+                          alt={service.name}
+                          className="sv-image-thumb"
+                        />
+                      ) : (
+                        <div className="sv-image-thumb-placeholder">—</div>
+                      )}
+                    </span>
                     <span className="sv-name">{service.name}</span>
                     <span className="sv-desc">{service.desc}</span>
                     <div className="sv-tags">
@@ -416,6 +635,14 @@ export default function AdminServices() {
                       <span className="sv-card-num">{service.num}</span>
                       <span className="sv-card-icon">{service.icon}</span>
                     </div>
+                    {service.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={service.image}
+                        alt={service.name}
+                        className="sv-image-thumb"
+                      />
+                    ) : null}
                   </div>
                   <p className="sv-card-name">{service.name}</p>
                   <p className="sv-card-desc">{service.desc}</p>

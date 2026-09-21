@@ -1,19 +1,19 @@
 "use client";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import styles from "./ClientsMarquee.module.css";
 
 export default function ClientsMarquee({ clients }) {
+  const t = useTranslations("projects");
+
   const mid = Math.ceil(clients.length / 2);
   const row1 = clients.slice(0, mid);
   const row2 = clients.slice(mid);
 
   return (
     <section className={styles.section}>
-      <p className="section-label" style={{ paddingLeft: "60px" }}>
-        Clients We&apos;ve Served
-      </p>
       <h2 className={styles.heading}>
-        Some of Our <em>Partners</em>
+        {t("partnersHeading")} <em>{t("partnersHeadingEm")}</em>
       </h2>
 
       {/* Row 1 — scrolls left */}

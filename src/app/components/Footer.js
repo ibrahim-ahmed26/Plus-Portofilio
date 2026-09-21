@@ -1,13 +1,16 @@
+"use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import styles from "./Footer.module.css";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", key: "home" },
+  { href: "/about", key: "about" },
+  { href: "/services", key: "services" },
+  { href: "/projects", key: "projects" },
+  { href: "/contact", key: "contact" },
 ];
 
 const services = [
@@ -42,21 +45,50 @@ const socials = [
   },
 ];
 
+// ── Rotating CTA background images ──
+const ctaBgImages = [
+  "/Artboard.png",
+  "/Artboard2.png",
+  "/Artboard3.png",
+  "/Artboard4.png",
+];
+
 export default function Footer() {
+  const t = useTranslations("footer");
   const year = new Date().getFullYear();
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % ctaBgImages.length);
+    }, 60000); // 60 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <footer className={styles.footer}>
       {/* ── TOP CTA BAND ── */}
       <div className={styles.ctaBand}>
-        <div className={styles.ctaLeft}>
-          <p className={styles.ctaEyebrow}>Ready to start?</p>
-          <h2 className={styles.ctaHeading}>
-            Let&apos;s build something <em>great.</em>
-          </h2>
+        <div className={styles.ctaBg}>
+          {ctaBgImages.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt="brands Images"
+              fill
+              style={{ objectFit: "cover" }}
+              priority={i === 0}
+              className={`${styles.ctaBgImg} ${i === bgIndex ? styles.ctaBgImgActive : ""
+                }`}
+            />
+          ))}
+          <div className={styles.ctaOverlay} />
         </div>
+
+        <div className={styles.ctaLeft}></div>
         <Link href="/contact" className={styles.ctaBtn}>
-          Start a Project →
+          {t("cta")} →
         </Link>
       </div>
 
@@ -74,10 +106,7 @@ export default function Footer() {
               />
             </div>
           </Link>
-          <p className={styles.tagline}>
-            A full-service digital agency and creative partner for major brands
-            in Egypt &amp; the Middle East.
-          </p>
+          <p className={styles.tagline}>{t("tagline")}</p>
           <div className={styles.contact}>
             <a href="tel:01118887031" className={styles.contactItem}>
               <span className={styles.contactIcon}>📞</span>
@@ -99,12 +128,12 @@ export default function Footer() {
 
         {/* Navigation column */}
         <div className={styles.col}>
-          <h3 className={styles.colTitle}>Navigation</h3>
+          <h3 className={styles.colTitle}>{t("navigation")}</h3>
           <ul className={styles.colLinks}>
-            {navLinks.map(({ href, label }) => (
+            {navLinks.map(({ href, key }) => (
               <li key={href}>
                 <Link href={href} className={styles.colLink}>
-                  {label}
+                  {t(key)}
                 </Link>
               </li>
             ))}
@@ -113,7 +142,7 @@ export default function Footer() {
 
         {/* Services column */}
         <div className={styles.col}>
-          <h3 className={styles.colTitle}>Services</h3>
+          <h3 className={styles.colTitle}>{t("services")}</h3>
           <ul className={styles.colLinks}>
             {services.map((s) => (
               <li key={s}>
@@ -127,7 +156,7 @@ export default function Footer() {
 
         {/* Socials column */}
         <div className={styles.col}>
-          <h3 className={styles.colTitle}>Follow Us</h3>
+          <h3 className={styles.colTitle}>{t("followUs")}</h3>
           <ul className={styles.colLinks}>
             {socials.map((s) => (
               <li key={s.label}>
@@ -144,15 +173,15 @@ export default function Footer() {
             ))}
           </ul>
         </div>
-      </div>
 
-      {/* ── BOTTOM BAR ── */}
-      <div className={styles.bottom}>
-        <p className={styles.copy}>
-          © {year} Plus Creative Studio. All rights reserved.
-        </p>
-        <p className={styles.madein}>Made with ✦ in Cairo</p>
+        {/* ── BOTTOM BAR ── */}
+        <div className={styles.bottom} >
+          <p className={styles.copy}>
+            © {year} Plus Creative Studio. {t("rights")}
+          </p>
+          <p className={styles.madein}>{t("madeIn")}</p>
+        </div >
       </div>
-    </footer>
+    </footer >
   );
 }

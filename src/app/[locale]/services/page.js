@@ -1,7 +1,9 @@
-import { db } from "../lib/firebase";
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import { db } from "../../lib/firebase";
 import styles from "./page.module.css";
 import { collection, getDocs } from "firebase/firestore";
-import ServicesAnimations from "../components/ServicesAnimations";
+import ServicesAnimations from "../../components/ServicesAnimations";
 
 export const metadata = {
   title: "Services | Plus Creative Studio",
@@ -10,37 +12,50 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function Services() {
+  const t = await getTranslations("services");
+
   const snapshot = await getDocs(collection(db, "services"));
   const services = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
+  const steps = [
+    { step: "01", title: t("step1Title"), desc: t("step1Desc") },
+    { step: "02", title: t("step2Title"), desc: t("step2Desc") },
+    { step: "03", title: t("step3Title"), desc: t("step3Desc") },
+    { step: "04", title: t("step4Title"), desc: t("step4Desc") },
+  ];
+
   return (
     <>
       <ServicesAnimations />
-
-      {/* HERO */}
       <section className={styles.hero}>
-        <div className={styles.heroRings} aria-hidden="true">
-          <div className="ring" />
-          <div className="ring" />
-          <div className="ring" />
+        <div className={styles.heroBg}>
+          <Image
+            src="/our_service.png"
+            alt="Services hero image"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
+          />
         </div>
-        <p className={`${styles.eyebrow} serv-eyebrow`}>03 — What We Do</p>
-        <h1 className={`${styles.title} serv-title`}>
-          Our <em>Services</em>
-        </h1>
-        <p className={`${styles.subtitle} serv-subtitle`}>
-          Comprehensive advertising solutions that keep pace with global and
-          Egyptian market trends.
-        </p>
       </section>
-
-      {/* SERVICES GRID */}
       <section className={`${styles.grid} serv-grid`}>
         {services.map((s) => (
           <article key={s.num} className={`${styles.card} serv-card`}>
+            {s.image && (
+              <div className={styles.cardImageWrap}>
+                <Image
+                  src={s.image}
+                  alt={s.name}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+                <div className={styles.cardImageOverlay} />
+              </div>
+            )}
+
             <div className={styles.cardTop}>
               <span className={styles.cardNum}>{s.num}</span>
               <span className={styles.cardIcon}>{s.icon}</span>
@@ -59,35 +74,13 @@ export default async function Services() {
         ))}
       </section>
 
-      {/* PROCESS */}
       <section className={styles.process}>
-        <p className="section-label serv-process-label">How We Work</p>
+        <p className="section-label serv-process-label">{t("processLabel")}</p>
         <h2 className={`${styles.processHeading} serv-process-heading`}>
-          Our <em>Process</em>
+          {t("processHeading")} <em>{t("processHeadingEm")}</em>
         </h2>
         <div className={`${styles.processSteps} serv-process-steps`}>
-          {[
-            {
-              step: "01",
-              title: "Discover",
-              desc: "We dive deep into your brand, audience, and market to uncover the insight that drives everything.",
-            },
-            {
-              step: "02",
-              title: "Strategise",
-              desc: "We build a clear creative strategy and campaign blueprint before a single pixel is designed.",
-            },
-            {
-              step: "03",
-              title: "Create",
-              desc: "Our creative team brings the strategy to life with ideas that are bold, beautiful, and purposeful.",
-            },
-            {
-              step: "04",
-              title: "Launch",
-              desc: "We execute with precision across every channel, measuring impact and optimising in real time.",
-            },
-          ].map((p) => (
+          {steps.map((p) => (
             <div
               key={p.step}
               className={`${styles.processStep} serv-process-step`}
