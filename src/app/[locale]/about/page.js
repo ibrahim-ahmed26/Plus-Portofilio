@@ -30,7 +30,7 @@ export default async function About() {
       <section className={styles.hero}>
         <div className={styles.heroBg}>
           <Image
-            src="/who_we_are.png"
+            src="/who_we_ares.png"
             alt=""
             fill
             quality={90}
@@ -39,6 +39,12 @@ export default async function About() {
             priority
           />
         </div>
+        <div className={styles.heroOverlay} />
+
+        <p className={`${styles.eyebrow} about-eyebrow`}>{t("heroEyebrow")}</p>
+        <h1 className={`${styles.title} about-title`}>
+          {t("heroTitle")} <em>{t("heroTitleEm")}</em>
+        </h1>
       </section>
       <section className={styles.story}>
         <div className={styles.storyGrid}>
@@ -62,7 +68,7 @@ export default async function About() {
       <section className={styles.vision}>
         <div className={styles.visionBg}>
           <Image
-            src="/our_vision.png"
+            src="/our vision_.png"
             alt="Our Vision"
             fill
             quality={90}
@@ -70,6 +76,14 @@ export default async function About() {
             priority
             style={{ objectFit: "cover" }}
           />
+        </div>
+        <div className={styles.visionOverlay} />
+
+        <div className={styles.visionInner}>
+          <blockquote className={`${styles.visionQuote} about-vision`}>
+            {t("visionQuoteStart")} <em>{t("visionQuoteEm")}</em>{" "}
+            {t("visionQuoteEnd")}
+          </blockquote>
         </div>
       </section>
       <section className={styles.values}>
