@@ -49,6 +49,12 @@ export default function Contact() {
         submittedAt: new Date(),
       });
 
+      await fetch("/api/contact-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
       setStatus("success");
       toast.success(t("toastSuccess"));
       setTimeout(() => setStatus("idle"), 3000);

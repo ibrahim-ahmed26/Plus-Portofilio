@@ -166,7 +166,6 @@ export default function AdminContacts() {
       <div>
         <h1 style={s.heading}>✉ Contact Submissions</h1>
 
-        {/* Stats */}
         {!loading && (
           <div className="contacts-stats">
             <div className="contacts-stat">
