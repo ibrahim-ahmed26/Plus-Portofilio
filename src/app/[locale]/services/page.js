@@ -33,13 +33,20 @@ export default async function Services() {
       <section className={styles.hero}>
         <div className={styles.heroBg}>
           <Image
-            src="/our_service.png"
+            src="/our_services.png"
             alt="Services hero image"
             fill
             style={{ objectFit: "cover" }}
             priority
           />
         </div>
+        <div className={styles.heroOverlay} />
+
+        <p className={`${styles.eyebrow} serv-eyebrow`}>{t("heroEyebrow")}</p>
+        <h1 className={`${styles.title} serv-title`}>
+          {t("heroTitle")} <em>{t("heroTitleEm")}</em>
+        </h1>
+        <p className={`${styles.subtitle} serv-subtitle`}>{t("heroSubtitle")}</p>
       </section>
       <section className={`${styles.grid} serv-grid`}>
         {services.map((s) => (

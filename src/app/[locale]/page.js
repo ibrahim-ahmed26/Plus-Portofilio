@@ -147,14 +147,19 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={styles.heroBg}>
           <Image
-            src="/main_cover.png"
+            src="/main_covers.png"
             alt="Main Cover"
             fill
             style={{ objectFit: "cover" }}
             priority
           />
         </div>
-
+        <div className={styles.heroOverlay} />
+        <h1 className={`${styles.title} hero-title`}>
+          {t("heroTitleLine1")}
+          <em>{t("heroTitleEm")}</em>
+          {t("heroTitleLine2")}
+        </h1>
         <div className={styles.bottom}>
           <Link href="/services" className={`${styles.btn} hero-btn`}>
             {t("heroBtn")} <span className={styles.arrow}>→</span>
@@ -195,8 +200,6 @@ export default function Home() {
           />
         </div>
       </section>
-
-      {/* ── CLIENTS ── */}
       <section className={`${styles.clients} gsap-clients`}>
         <ClientsSection />
       </section>

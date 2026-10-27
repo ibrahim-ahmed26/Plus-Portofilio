@@ -21,7 +21,11 @@
     "stat3Num": "100+",
     "stat3Label": "Campaigns",
     "stat4Num": "4",
-    "stat4Label": "Countries"
+    "stat4Label": "Countries",
+    "heroTitleLine1": "We Make",
+    "heroTitleEm": "Brands",
+    "heroTitleLine2": "Unforgettable.",
+    "brandsLabel": "Brands We've Worked With"
   },
   "about": {
     "heroEyebrow": "02 — Who We Are",
@@ -124,6 +128,9 @@
     "navigation": "Navigation",
     "followUs": "Follow Us",
     "rights": "All rights reserved.",
-    "madeIn": "Made with ✦ in Cairo"
+    "madeIn": "Made with ✦ in Cairo",
+    "ctaEyebrow": "Ready to start?",
+    "ctaHeadingLine1": "Let's build something",
+    "ctaHeadingEm": "great."
   }
 }

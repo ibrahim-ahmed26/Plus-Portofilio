@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import { notifyAdmins } from "../../lib/notifyAdmins";
 
 function sha256(value) {
   return crypto.createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
@@ -9,10 +10,6 @@ export async function POST(req) {
   const body = await req.json();
   const { name, email, phone, message } = body;
 
-  console.log("PIXEL_ID:", process.env.NEXT_PUBLIC_FB_PIXEL_ID);
-  console.log("TOKEN present:", !!process.env.FB_CONVERSIONS_ACCESS_TOKEN);
-
-  // 1. Send server-side Lead event to Meta Conversions API
   try {
     const payload = {
       data: [
@@ -47,30 +44,11 @@ export async function POST(req) {
     console.error("Meta Conversions API error:", err);
   }
 
-  // 2. Email the owner — only if credentials are configured
-  if (process.env.EMAIL_USER && process.env.EMAIL_APP_PASSWORD && process.env.EMAIL_TO) {
-    try {
-      const nodemailer = (await import("nodemailer")).default;
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_APP_PASSWORD,
-        },
-      });
-
-      await transporter.sendMail({
-        from: `"Landing Page" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_TO,
-        subject: `New Lead: ${name}`,
-        text: `New submission from the landing page:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || "—"}\nMessage: ${message}`,
-      });
-    } catch (err) {
-      console.error("Email send error:", err);
-    }
-  } else {
-    console.log("Email not configured yet — skipping notification email. Lead saved to Firestore.");
-  }
+  // 2. Notify all dashboard users
+  await notifyAdmins({
+    subject: `New Landing Page Lead: ${name}`,
+    text: `New submission from the landing page:\n\nName: ${name}\nCompany: ${body.company || "—"}\nEmail: ${email}\nPhone: ${phone || "—"}\nService: ${body.service || "—"}\nBudget: ${body.budget || "—"}`,
+  });
 
   return NextResponse.json({ success: true });
 }

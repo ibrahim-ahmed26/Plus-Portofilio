@@ -47,10 +47,10 @@ const socials = [
 
 // ── Rotating CTA background images ──
 const ctaBgImages = [
-  "/Artboard.png",
-  "/Artboard2.png",
-  "/Artboard3.png",
-  "/Artboard4.png",
+  "/readys_1.png",
+  "/readys_2.png",
+  "/readys_3.png",
+  "/readys_4.png",
 ];
 
 export default function Footer() {
@@ -86,7 +86,12 @@ export default function Footer() {
           <div className={styles.ctaOverlay} />
         </div>
 
-        <div className={styles.ctaLeft}></div>
+        <div className={styles.ctaLeft}>
+          <p className={styles.ctaEyebrow}>{t("ctaEyebrow")}</p>
+          <h2 className={styles.ctaHeading}>
+            {t("ctaHeadingLine1")} <em>{t("ctaHeadingEm")}</em>
+          </h2>
+        </div>
         <Link href="/contact" className={styles.ctaBtn}>
           {t("cta")} →
         </Link>
@@ -173,15 +178,15 @@ export default function Footer() {
             ))}
           </ul>
         </div>
-
-        {/* ── BOTTOM BAR ── */}
-        <div className={styles.bottom} >
-          <p className={styles.copy}>
-            © {year} Plus Creative Studio. {t("rights")}
-          </p>
-          <p className={styles.madein}>{t("madeIn")}</p>
-        </div >
       </div>
-    </footer >
+
+      {/* ── BOTTOM BAR ── */}
+      <div className={styles.bottom}>
+        <p className={styles.copy}>
+          © {year} Plus Creative Studio. {t("rights")}
+        </p>
+        <p className={styles.madein}>{t("madeIn")}</p>
+      </div>
+    </footer>
   );
 }
