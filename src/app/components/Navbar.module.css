@@ -487,4 +487,15 @@
   align-items: center;
   gap: 8px;
   padding: 16px 0;
+  color: var(--cream);
+}
+
+.panelLangSwitch .langBtn {
+  color: rgba(245, 240, 220, 0.5);
+}
+.panelLangSwitch .langBtn:hover {
+  color: rgba(245, 240, 220, 0.8);
+}
+.panelLangSwitch .langActive {
+  color: var(--cream);
 }
