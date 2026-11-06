@@ -462,6 +462,7 @@ export default function LandingPage() {
                   onChange={update("email")}
                 />
                 <input
+                  required
                   className={styles.input}
                   placeholder="Company / Brand Name"
                   value={form.company}
